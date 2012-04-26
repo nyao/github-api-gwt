@@ -3,3 +3,4 @@ gwt-unitCache
 war/github/
 war/WEB-INF/classes/
 war/WEB-INF/deploy/
+war/.gitignore
