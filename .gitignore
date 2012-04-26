@@ -1,0 +1,5 @@
+gwt-unitCache
+.settings
+war/github/
+war/WEB-INF/classes/
+war/WEB-INF/deploy/
