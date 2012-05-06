@@ -6,12 +6,14 @@ import gitgwt.client.models.Repositories;
 import gitgwt.client.models.Repository;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -40,6 +42,25 @@ public class Sample implements EntryPoint {
                 event.preventDefault();
             }
         });
+        
+        new com.github.nyao.gwtgithub.client.GitHubApi().getRepositories("soundTricker", new AsyncCallback<com.github.nyao.gwtgithub.client.models.Repositories>() {
+			
+			@Override
+			public void onSuccess(com.github.nyao.gwtgithub.client.models.Repositories result) {
+				JsArray<com.github.nyao.gwtgithub.client.models.Repository> data = result.getData();
+				
+				com.github.nyao.gwtgithub.client.models.Repository repository = data.get(0);
+				
+				GWT.log(repository.getGitUrl());
+				
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				GWT.log("error", caught);
+			}
+		});
+        
     }
     
     private void addRepository(final Repository repository) {
