@@ -5,3 +5,4 @@ war/WEB-INF/classes/
 war/WEB-INF/deploy/
 war/.gitignore
 war/com.github.nyao.gwtgithub.github/
+war/githubdemo/
