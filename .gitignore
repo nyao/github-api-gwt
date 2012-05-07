@@ -1,8 +1,9 @@
 gwt-unitCache
 .settings
-war/github/
+
 war/WEB-INF/classes/
 war/WEB-INF/deploy/
-war/.gitignore
-war/com.github.nyao.gwtgithub.github/
+war/github/
 war/githubdemo/
+
+war/.gitignore
