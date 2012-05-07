@@ -1,6 +1,9 @@
 package com.github.nyao.gwtgithub.client;
 
+import com.github.nyao.gwtgithub.client.models.Issues;
 import com.github.nyao.gwtgithub.client.models.Repositories;
+import com.github.nyao.gwtgithub.client.models.Repository;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -22,9 +25,25 @@ public class GitHubApi {
 	
 	public void getRepositories(String user, AsyncCallback<Repositories> callback) {
 		String url = BASE_URL + "users/" + user + "/repos";
+        GWT.log(url);
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		jsonp.requestObject(url, callback);
 	}
+    
+    public void getIssues(String user, String repository, AsyncCallback<Issues> callback) {
+        String url = BASE_URL + "repos/" + user + "/" + repository + "/issues";
+        getIssues(url, callback);
+    }
+    
+    public void getIssues(Repository repository, AsyncCallback<Issues> callback) {
+        getIssues(repository.getUrl() + "/issues", callback);
+    }
+    
+    protected void getIssues(String url, AsyncCallback<Issues> callback) {
+        GWT.log(url);
+        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+        jsonp.requestObject(url, callback);
+    }
 	
 	private String addAutorization(String url) {
 		String prefix = "?";

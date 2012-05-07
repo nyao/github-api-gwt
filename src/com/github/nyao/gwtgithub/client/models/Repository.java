@@ -15,4 +15,6 @@ public class Repository extends JavaScriptObject {
     public final native String getHtmlUrl() /*-{ return this.html_url; }-*/;
     
     public final native int openIssues() /*-{ return this.open_issues; }-*/;
+
+    public final native GHUser getOwner() /*-{ return this.owner; }-*/;
 }

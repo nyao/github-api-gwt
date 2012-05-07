@@ -1,4 +1,4 @@
-package gitgwt.client;
+package com.github.nyao.gwtgithub.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.http.client.Request;

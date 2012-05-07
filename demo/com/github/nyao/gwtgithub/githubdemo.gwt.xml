@@ -5,5 +5,5 @@
     <inherits name="com.google.gwt.http.HTTP" />
     <inherits name="com.github.nyao.gwtgithub.Github"/>
     <source path="client" />
-    <entry-point class="gitgwt.client.Sample"></entry-point>
+    <entry-point class="com.github.nyao.gwtgithub.client.Sample"></entry-point>
 </module>
