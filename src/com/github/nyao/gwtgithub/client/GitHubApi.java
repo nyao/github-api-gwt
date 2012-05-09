@@ -19,6 +19,7 @@ public class GitHubApi {
 
 	public void getMyRepository(AsyncCallback<Repositories> callback) {
 		String url = addAutorization(BASE_URL + "user/repos");
+		GWT.log(url);
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		jsonp.requestObject(url, callback);
 	}
@@ -54,7 +55,7 @@ public class GitHubApi {
 		url += prefix;
 
 		if(accessToken != null) {
-			url += "accessToken=" + accessToken;
+			url += "access_token=" + accessToken;
 		}
 		return url;
 	}
