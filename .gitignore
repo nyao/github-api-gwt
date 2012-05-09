@@ -7,3 +7,4 @@ war/github/
 war/githubdemo/
 
 war/.gitignore
+.gwt/
