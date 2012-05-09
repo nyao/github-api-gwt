@@ -1,5 +1,7 @@
 package com.github.nyao.gwtgithub.client;
 
+import static com.google.gwt.query.client.GQuery.$;
+
 import com.github.nyao.gwtgithub.client.models.Issue;
 import com.github.nyao.gwtgithub.client.models.Issues;
 import com.github.nyao.gwtgithub.client.models.Repositories;
@@ -8,44 +10,32 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.query.client.Function;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextBox;
 
 public class Sample implements EntryPoint {
 
     final Sample self = this;
+    GitHubApi api = new GitHubApi();
 
-    final Element repositoriesElement = RootPanel.getBodyElement().getElementsByTagName("tbody").getItem(0);
-    final Element issuesElement = RootPanel.getBodyElement().getElementsByTagName("tbody").getItem(1);
-    
     @Override
     public void onModuleLoad() {
-        final TextBox login = TextBox.wrap(RootPanel.get("Login").getElement());
-        Button loginSubmit = Button.wrap(RootPanel.get("LoginSubmit").getElement());
-        final TextBox token = TextBox.wrap(RootPanel.get("Token").getElement());
-        Button tokenSubmit = Button.wrap(RootPanel.get("TokenSubmit").getElement());
-        
-        loginSubmit.addClickHandler(new ClickHandler() {
+        $("#LoginSubmit").click(new Function() {
             @Override
-            public void onClick(ClickEvent event) {
-                event.preventDefault();
-                new GitHubApi().getRepositories(login.getText(), new BuildRepositoryTable());
+            public boolean f(Event e) {
+                api.getRepositories($("#Login").val(), new BuildRepositoryTable());
+                return true;
             }
         });
         
-        tokenSubmit.addClickHandler(new ClickHandler() {
+        $("#TokenSubmit").click(new Function() {
             @Override
-            public void onClick(ClickEvent event) {
-                event.preventDefault();
-                GitHubApi api = new GitHubApi();
-                api.setAuthorization(token.getText());
+            public boolean f(Event e) {
+                api.setAuthorization($("#Token").val());
                 api.getMyRepository(new BuildRepositoryTable());
+                return true;
             }
         });
     }
@@ -53,10 +43,7 @@ public class Sample implements EntryPoint {
     private final class BuildRepositoryTable implements AsyncCallback<Repositories> {
         @Override
         public void onSuccess(Repositories result) {
-            int length = repositoriesElement.getChildNodes().getLength();
-            for (int i = 0; i < length; i ++) {
-                repositoriesElement.getChildNodes().getItem(0).removeFromParent();
-            }
+            $("#Repositories tbody tr").remove();
             JsArray<Repository> data = result.getData();
             for (int i = 0; i < data.length(); i ++) {
                 Repository r = data.get(i);
@@ -75,38 +62,29 @@ public class Sample implements EntryPoint {
         
         Element name = DOM.createTD();
         Element nameA = DOM.createAnchor();
+        $(nameA).attr("href",   repository.getHtmlUrl())
+                .attr("target", "_blank")
+                .text("(_)");
         name.setInnerText(repository.getName());
         name.appendChild(nameA);
         tr.appendChild(name);
         
         Element issueSize = DOM.createTD();
-        Element a = DOM.createAnchor();
-        issueSize.appendChild(a);
-        a.setInnerText(String.valueOf(repository.openIssues()));
+        Element openIssues = DOM.createAnchor();
+        issueSize.appendChild(openIssues);
+        openIssues.setInnerText(String.valueOf(repository.openIssues()));
         tr.appendChild(issueSize);
         
-        repositoriesElement.appendChild(tr);
-
-        Anchor na = Anchor.wrap(nameA);
-        na.setHref(repository.getHtmlUrl());
-        na.setTarget("_blank");
-        na.setText("(_)");
-        
-        Anchor.wrap(a).addClickHandler(new ClickHandler() {
+        $(openIssues).click(new Function() {
             @Override
-            public void onClick(ClickEvent event) {
-                event.preventDefault();
-                new GitHubApi().getIssues(repository, new AsyncCallback<Issues>() {
+            public boolean f(Event e) {
+                api.getIssues(repository, new AsyncCallback<Issues>() {
                     @Override
                     public void onSuccess(Issues result) {
-                        int length = issuesElement.getChildNodes().getLength();
-                        for (int i = 0; i < length; i ++) {
-                            issuesElement.getChildNodes().getItem(0).removeFromParent();
-                        }
+                        $("#Issues tbody tr").remove();
                         JsArray<Issue> data = result.getData();
                         for (int i = 0; i < data.length(); i ++) {
-                            Issue issue = data.get(i);
-                            addIssue(issue);
+                            addIssue(data.get(i));
                         }
                     }
                     @Override
@@ -114,8 +92,11 @@ public class Sample implements EntryPoint {
                         GWT.log("error", caught);
                     }
                 });
+                return true;
             }
         });
+        
+        $("#Repositories tbody").append($(tr));
     }
     
     private void addIssue(final Issue issue) {
@@ -123,17 +104,15 @@ public class Sample implements EntryPoint {
 
         Element number = DOM.createTD();
         Element numberA = DOM.createAnchor();
+        $(numberA).attr("href",   issue.getHtmlUrl())
+                  .attr("target", "_blank")
+                  .text("#" + String.valueOf(issue.getNumber()));
         number.appendChild(numberA);
         tr.appendChild(number);
         
         Element title = DOM.createTD();
         title.setInnerText(issue.getTitle());
         tr.appendChild(title);
-        issuesElement.appendChild(tr);
-        
-        Anchor a = Anchor.wrap(numberA);
-        a.setText("#" + String.valueOf(issue.getNumber()));
-        a.setHref(issue.getHtmlUrl());
-        a.setTarget("_blank");
+        $("#Issues tbody").append($(tr));
     }
 }

@@ -37,19 +37,19 @@
     <div class="container">
         <div class="row">
             <div class="span12">
-                 <form class="well form-inline">
+                 <div class="well form-inline">
                     <input id="Login" type="text" class="span2" placeholder="Login">
-                    <button id="LoginSubmit" type="submit" class="btn">Submit</button>
+                    <button id="LoginSubmit" class="btn">Submit</button>
                     <p>or</p>
                     <input id="Token" type="text" class="span4" placeholder="Token">
-                    <button id="TokenSubmit" type="submit" class="btn">Submit</button>
-                </form>
+                    <button id="TokenSubmit" class="btn">Submit</button>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="span6">
                 <h2>Repositories</h2>
-                <table class="table table-bordered table-striped">
+                <table id="Repositories" class="table table-bordered table-striped">
                     <thead>
                         <tr><th>name</th>
                             <th>issues</th></tr>
@@ -60,7 +60,7 @@
             </div>
             <div class="span6">
                 <h2>Issues</h2>
-                <table class="table table-bordered table-striped">
+                <table id="Issues" class="table table-bordered table-striped">
                     <thead>
                         <tr><th>number</th>
                             <th>title</th></tr>
