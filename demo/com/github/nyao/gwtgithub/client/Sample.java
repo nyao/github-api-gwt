@@ -28,34 +28,46 @@ public class Sample implements EntryPoint {
     public void onModuleLoad() {
         final TextBox login = TextBox.wrap(RootPanel.get("Login").getElement());
         Button loginSubmit = Button.wrap(RootPanel.get("LoginSubmit").getElement());
+        final TextBox token = TextBox.wrap(RootPanel.get("Token").getElement());
+        Button tokenSubmit = Button.wrap(RootPanel.get("TokenSubmit").getElement());
         
         loginSubmit.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
                 event.preventDefault();
-                new GitHubApi().getRepositories(login.getText(), new AsyncCallback<Repositories>() {
-                    @Override
-                    public void onSuccess(Repositories result) {
-                        int length = repositoriesElement.getChildNodes().getLength();
-                        for (int i = 0; i < length; i ++) {
-                            repositoriesElement.getChildNodes().getItem(0).removeFromParent();
-                        }
-                        JsArray<Repository> data = result.getData();
-                        for (int i = 0; i < data.length(); i ++) {
-                            Repository r = data.get(i);
-                            addRepository(r);
-                        }
-                    }
-                    
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        GWT.log("error", caught);
-                    }
-                });
+                new GitHubApi().getRepositories(login.getText(), new BuildRepositoryTable());
             }
         });
         
-        
+        tokenSubmit.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                event.preventDefault();
+                GitHubApi api = new GitHubApi();
+                api.setAuthorization(token.getText());
+                api.getMyRepository(new BuildRepositoryTable());
+            }
+        });
+    }
+
+    private final class BuildRepositoryTable implements AsyncCallback<Repositories> {
+        @Override
+        public void onSuccess(Repositories result) {
+            int length = repositoriesElement.getChildNodes().getLength();
+            for (int i = 0; i < length; i ++) {
+                repositoriesElement.getChildNodes().getItem(0).removeFromParent();
+            }
+            JsArray<Repository> data = result.getData();
+            for (int i = 0; i < data.length(); i ++) {
+                Repository r = data.get(i);
+                addRepository(r);
+            }
+        }
+
+        @Override
+        public void onFailure(Throwable caught) {
+            GWT.log("error", caught);
+        }
     }
     
     private void addRepository(final Repository repository) {
