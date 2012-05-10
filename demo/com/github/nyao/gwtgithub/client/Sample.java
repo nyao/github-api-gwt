@@ -16,7 +16,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class Sample implements EntryPoint {
 
-    final Sample self = this;
     GitHubApi api = new GitHubApi();
 
     @Override
