@@ -1,5 +1,7 @@
 package com.github.nyao.gwtgithub.client;
 
+import com.github.nyao.gwtgithub.client.models.GHUser;
+import com.github.nyao.gwtgithub.client.models.GHUsers;
 import com.github.nyao.gwtgithub.client.models.Issues;
 import com.github.nyao.gwtgithub.client.models.Repositories;
 import com.github.nyao.gwtgithub.client.models.Repository;
@@ -17,6 +19,13 @@ public class GitHubApi {
 	
 	private static final String BASE_URL = "https://api.github.com/";
 
+	public void getUser(AsyncCallback<GHUser> callback) {
+		String url = addAutorization(BASE_URL + "user");
+		GWT.log(url);
+		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+		jsonp.requestObject(url, callback);
+	}
+
 	public void getMyRepository(AsyncCallback<Repositories> callback) {
 		String url = addAutorization(BASE_URL + "user/repos");
 		GWT.log(url);
@@ -25,7 +34,21 @@ public class GitHubApi {
 	}
 	
 	public void getRepositories(String user, AsyncCallback<Repositories> callback) {
-		String url = BASE_URL + "users/" + user + "/repos";
+		String url = addAutorization(BASE_URL + "users/" + user + "/repos");
+        GWT.log(url);
+		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+		jsonp.requestObject(url, callback);
+	}
+
+	public void getOrganizations(String user, AsyncCallback<GHUsers> callback) {
+		String url = addAutorization(BASE_URL + "users/" + user + "/orgs");
+        GWT.log(url);
+		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+		jsonp.requestObject(url, callback);
+	}
+	
+	public void getOrganizations(AsyncCallback<GHUsers> callback) {
+		String url = addAutorization(BASE_URL + "user/orgs");
         GWT.log(url);
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		jsonp.requestObject(url, callback);

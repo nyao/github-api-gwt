@@ -6,6 +6,6 @@ public class GHUser extends JavaScriptObject {
     protected GHUser() {
     }
 
-    public final native String getLogin() /*-{ return this.login; }-*/;
+    public final native String getLogin() /*-{ if (this.data != null) {return this.data.login} else {return this.login;} }-*/;
 
 }
