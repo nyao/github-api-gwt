@@ -52,10 +52,8 @@ public class GitHubApi {
 			prefix = "&";
 		}
 		
-		url += prefix;
-
 		if(accessToken != null) {
-			url += "access_token=" + accessToken;
+			url += prefix + "access_token=" + accessToken;
 		}
 		return url;
 	}
