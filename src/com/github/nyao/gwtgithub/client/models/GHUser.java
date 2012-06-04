@@ -6,13 +6,13 @@ public class GHUser extends JavaScriptObject {
     protected GHUser() {
     }
 
-    public final native String getLogin() /*-{ if (this.data != null) {return this.data.login} else {return this.login;} }-*/;
+	public final native String getLogin() /*-{ return this.login; }-*/;
 
-    public final native String getGravatarId() /*-{ if (this.data != null) {return this.data.gravatar_id} else {return this.gravatar_id;} }-*/;
+    public final native String getGravatarId() /*-{ return this.gravatar_id; }-*/;
 
-    public final native String getUrl() /*-{ if (this.data != null) {return this.data.url} else {return this.url;} }-*/;
+    public final native String getUrl() /*-{ return this.url; }-*/;
 
-    public final native String getAvatarUrl() /*-{ if (this.data != null) {return this.data.avatar_url} else {return this.avatar_url;} }-*/;
+    public final native String getAvatarUrl() /*-{ return this.avatar_url; }-*/;
 
-    public final native String getId() /*-{ if (this.data != null) {return this.data.id} else {return this.id;} }-*/;
+    public final native String getId() /*-{ return this.id; }-*/;
 }

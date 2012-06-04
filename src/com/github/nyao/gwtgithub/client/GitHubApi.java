@@ -1,9 +1,9 @@
 package com.github.nyao.gwtgithub.client;
 
+import com.github.nyao.gwtgithub.client.api.Issues;
+import com.github.nyao.gwtgithub.client.api.Repositories;
+import com.github.nyao.gwtgithub.client.api.Users;
 import com.github.nyao.gwtgithub.client.models.GHUser;
-import com.github.nyao.gwtgithub.client.models.GHUsers;
-import com.github.nyao.gwtgithub.client.models.Issues;
-import com.github.nyao.gwtgithub.client.models.Repositories;
 import com.github.nyao.gwtgithub.client.models.Repository;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
@@ -40,14 +40,14 @@ public class GitHubApi {
 		jsonp.requestObject(url, callback);
 	}
 
-	public void getOrganizations(String user, AsyncCallback<GHUsers> callback) {
+	public void getOrganizations(String user, AsyncCallback<Users> callback) {
 		String url = addAutorization(BASE_URL + "users/" + user + "/orgs");
         GWT.log(url);
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
 		jsonp.requestObject(url, callback);
 	}
 	
-	public void getOrganizations(AsyncCallback<GHUsers> callback) {
+	public void getOrganizations(AsyncCallback<Users> callback) {
 		String url = addAutorization(BASE_URL + "user/orgs");
         GWT.log(url);
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();

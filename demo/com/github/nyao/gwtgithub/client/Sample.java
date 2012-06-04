@@ -2,9 +2,9 @@ package com.github.nyao.gwtgithub.client;
 
 import static com.google.gwt.query.client.GQuery.$;
 
+import com.github.nyao.gwtgithub.client.api.Issues;
+import com.github.nyao.gwtgithub.client.api.Repositories;
 import com.github.nyao.gwtgithub.client.models.Issue;
-import com.github.nyao.gwtgithub.client.models.Issues;
-import com.github.nyao.gwtgithub.client.models.Repositories;
 import com.github.nyao.gwtgithub.client.models.Repository;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

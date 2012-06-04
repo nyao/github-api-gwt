@@ -1,5 +1,6 @@
-package com.github.nyao.gwtgithub.client.models;
+package com.github.nyao.gwtgithub.client.api;
 
+import com.github.nyao.gwtgithub.client.models.Repository;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 
