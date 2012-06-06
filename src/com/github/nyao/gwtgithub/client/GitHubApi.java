@@ -57,12 +57,12 @@ public class GitHubApi {
 	}
     
     public void getIssues(String user, String repository, AsyncCallback<Issues> callback) {
-        String url = BASE_URL + "repos/" + user + "/" + repository + "/issues";
+        String url = addAutorization(BASE_URL + "repos/" + user + "/" + repository + "/issues");
         getIssues(url, callback);
     }
     
     public void getIssues(Repository repository, AsyncCallback<Issues> callback) {
-        getIssues(repository.getUrl() + "/issues", callback);
+        getIssues(addAutorization(repository.getUrl() + "/issues"), callback);
     }
     
     protected void getIssues(String url, AsyncCallback<Issues> callback) {
