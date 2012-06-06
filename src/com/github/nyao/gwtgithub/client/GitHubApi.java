@@ -1,9 +1,11 @@
 package com.github.nyao.gwtgithub.client;
 
+import com.github.nyao.gwtgithub.client.api.Comments;
 import com.github.nyao.gwtgithub.client.api.Issues;
 import com.github.nyao.gwtgithub.client.api.Repositories;
 import com.github.nyao.gwtgithub.client.api.Users;
 import com.github.nyao.gwtgithub.client.models.GHUser;
+import com.github.nyao.gwtgithub.client.models.Issue;
 import com.github.nyao.gwtgithub.client.models.Repository;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
@@ -64,6 +66,13 @@ public class GitHubApi {
     }
     
     protected void getIssues(String url, AsyncCallback<Issues> callback) {
+        GWT.log(url);
+        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+        jsonp.requestObject(url, callback);
+    }
+    
+    public void getComment(Repository r, Issue issue, AsyncCallback<Comments> callback) {
+		String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber() + "/comments");
         GWT.log(url);
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
         jsonp.requestObject(url, callback);
