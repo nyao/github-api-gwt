@@ -1,10 +1,10 @@
 package com.github.nyao.gwtgithub.client;
 
+import com.github.nyao.gwtgithub.client.api.AUser;
 import com.github.nyao.gwtgithub.client.api.Comments;
 import com.github.nyao.gwtgithub.client.api.Issues;
 import com.github.nyao.gwtgithub.client.api.Repositories;
 import com.github.nyao.gwtgithub.client.api.Users;
-import com.github.nyao.gwtgithub.client.models.GHUser;
 import com.github.nyao.gwtgithub.client.models.Issue;
 import com.github.nyao.gwtgithub.client.models.Repository;
 import com.google.gwt.core.client.GWT;
@@ -21,7 +21,7 @@ public class GitHubApi {
 	
 	private static final String BASE_URL = "https://api.github.com/";
 
-	public void getUser(AsyncCallback<GHUser> callback) {
+	public void getUser(AsyncCallback<AUser> callback) {
 		String url = addAutorization(BASE_URL + "user");
 		GWT.log(url);
 		JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
