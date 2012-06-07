@@ -71,7 +71,7 @@ public class GitHubApi {
         jsonp.requestObject(url, callback);
     }
     
-    public void getComment(Repository r, Issue issue, AsyncCallback<Comments> callback) {
+    public void getComments(Repository r, Issue issue, AsyncCallback<Comments> callback) {
 		String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber() + "/comments");
         GWT.log(url);
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
