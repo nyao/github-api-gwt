@@ -5,9 +5,16 @@ import com.github.nyao.gwtgithub.client.api.Comments;
 import com.github.nyao.gwtgithub.client.api.Issues;
 import com.github.nyao.gwtgithub.client.api.Repositories;
 import com.github.nyao.gwtgithub.client.api.Users;
+import com.github.nyao.gwtgithub.client.models.Comment;
 import com.github.nyao.gwtgithub.client.models.Issue;
 import com.github.nyao.gwtgithub.client.models.Repository;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JsonUtils;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -76,6 +83,30 @@ public class GitHubApi {
         GWT.log(url);
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
         jsonp.requestObject(url, callback);
+    }
+
+    public void createComment(Repository r, Issue issue, String body, final AsyncCallback<Comment> callback) {
+        String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber() + "/comments");
+        GWT.log(url);
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, url);
+        String request = "{\"body\": " + JsonUtils.escapeValue(body) + "}";
+        GWT.log(request);
+        try {
+			builder.sendRequest(request, new RequestCallback() {
+				@Override
+				public void onResponseReceived(Request request, Response response) {
+					Comment result = JsonUtils.safeEval(response.getText());
+					callback.onSuccess(result);
+				}
+				
+				@Override
+				public void onError(Request request, Throwable exception) {
+					callback.onFailure(exception);
+				}
+			});
+		} catch (RequestException e) {
+			callback.onFailure(e);
+		}
     }
 	
 	private String addAutorization(String url) {
