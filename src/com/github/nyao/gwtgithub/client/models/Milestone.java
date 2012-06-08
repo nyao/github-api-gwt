@@ -16,10 +16,6 @@ public class Milestone extends JavaScriptObject {
 
     public final native int getClosedIssues() /*-{ return this.closed_issues; }-*/;
 
-    public final Date getCreatedAt() { return DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_SHORT).parse(this.getCreatedAtString()); }
-    
-    public final native String getCreatedAtString() /*-{ return this.created_at; }-*/;
-
     public final native String getState() /*-{ return this.state; }-*/;
 
     public final native String getDescription() /*-{ return this.description; }-*/;
@@ -35,4 +31,8 @@ public class Milestone extends JavaScriptObject {
     public final native int getNumber() /*-{ return this.number; }-*/;
 
     public final native int getId() /*-{ return this.id; }-*/;
+
+    public final Date getCreatedAt() { return DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_SHORT).parse(this.getCreatedAtString()); }
+    
+    public final native String getCreatedAtString() /*-{ return this.created_at; }-*/;
 }
