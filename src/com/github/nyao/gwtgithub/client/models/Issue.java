@@ -38,4 +38,13 @@ public class Issue extends JavaScriptObject {
     public final native JsArray<Label> getLabels() /*-{ return this.labels; }-*/;
     
     public final native PullRequest getPullRequest() /*-{ return this.pull_request; }-*/;
+
+    public static enum Prop {
+        title,
+        body,
+        assignee,
+        state,
+        milestone,
+        labels
+    }
 }

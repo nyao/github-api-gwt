@@ -1,5 +1,7 @@
 package com.github.nyao.gwtgithub.client;
 
+import java.util.HashMap;
+
 import com.github.nyao.gwtgithub.client.api.AUser;
 import com.github.nyao.gwtgithub.client.api.Comments;
 import com.github.nyao.gwtgithub.client.api.Issues;
@@ -77,6 +79,38 @@ public class GitHubApi {
         GWT.log(url);
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
         jsonp.requestObject(url, callback);
+    }
+    
+    public void editIssue(Repository r, Issue issue, HashMap<Issue.Prop, Object> prop, final AsyncCallback<Issue> callback) {
+        String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber());
+        GWT.log(url);
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, url);
+        StringBuilder request = new StringBuilder();
+        request.append("{");
+        for (Issue.Prop key : prop.keySet()) {
+            if (prop.get(key) instanceof String)
+                request.append("\"" + key.name() + "\": \"" + JsonUtils.escapeValue((String) prop.get(key)) + "\"");
+            if (prop.get(key) instanceof Integer)
+                request.append("\"" + key.name() + "\": " + prop.get(key));
+        }
+        request.append("}");
+        GWT.log(request.toString());
+        try {
+			builder.sendRequest(request.toString(), new RequestCallback() {
+				@Override
+				public void onResponseReceived(Request request, Response response) {
+					Issue result = JsonUtils.safeEval(response.getText());
+					callback.onSuccess(result);
+				}
+				
+				@Override
+				public void onError(Request request, Throwable exception) {
+					callback.onFailure(exception);
+				}
+			});
+		} catch (RequestException e) {
+			callback.onFailure(e);
+		}
     }
     
     public void getComments(Repository r, Issue issue, AsyncCallback<Comments> callback) {
