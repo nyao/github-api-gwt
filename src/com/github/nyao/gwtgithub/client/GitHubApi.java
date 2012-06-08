@@ -3,6 +3,7 @@ package com.github.nyao.gwtgithub.client;
 import com.github.nyao.gwtgithub.client.api.AUser;
 import com.github.nyao.gwtgithub.client.api.Comments;
 import com.github.nyao.gwtgithub.client.api.Issues;
+import com.github.nyao.gwtgithub.client.api.Milestones;
 import com.github.nyao.gwtgithub.client.api.Repositories;
 import com.github.nyao.gwtgithub.client.api.Users;
 import com.github.nyao.gwtgithub.client.models.Comment;
@@ -107,6 +108,13 @@ public class GitHubApi {
 		} catch (RequestException e) {
 			callback.onFailure(e);
 		}
+    }
+    
+    public void getMilestones(Repository r, AsyncCallback<Milestones> callback) {
+        String url = addAutorization(r.getUrl() + "/milestones");
+        GWT.log(url);
+        JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
+        jsonp.requestObject(url, callback);
     }
 	
 	private String addAutorization(String url) {
