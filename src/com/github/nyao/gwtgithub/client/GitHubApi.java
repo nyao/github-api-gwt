@@ -34,7 +34,7 @@ public class GitHubApi {
         this.baseUrl = url;
     }
 
-    public void setAuthorization(String accessToken) {
+    public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
@@ -42,19 +42,19 @@ public class GitHubApi {
         get(baseUrl + "user", callback);
     }
 
-    public void getMyRepositories(AsyncCallback<Repositories> callback) {
+    public void getRepos(AsyncCallback<Repositories> callback) {
         get(baseUrl + "user/repos", callback);
     }
 
-    public void getRepositories(String user, AsyncCallback<Repositories> callback) {
+    public void getRepos(String user, AsyncCallback<Repositories> callback) {
         get(baseUrl + "users/" + user + "/repos", callback);
     }
 
-    public void getOrganizations(String user, AsyncCallback<Users> callback) {
+    public void getOrgs(String user, AsyncCallback<Users> callback) {
         get(baseUrl + "users/" + user + "/orgs", callback);
     }
 
-    public void getOrganizations(AsyncCallback<Users> callback) {
+    public void getOrgs(AsyncCallback<Users> callback) {
         get(baseUrl + "user/orgs", callback);
     }
 
@@ -98,7 +98,7 @@ public class GitHubApi {
     }
 
     private <T extends JavaScriptObject> void get(String url, final AsyncCallback<T> callback) {
-        String requestUrl = addAutorization(url);
+        String requestUrl = makeRequestUrl(url);
         GWT.log("[GET]" + requestUrl);
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
         jsonp.requestObject(requestUrl, callback);
@@ -106,7 +106,7 @@ public class GitHubApi {
 
     private <T extends JavaScriptObject> void post(String url, ValueForSave<?> request,
             final AsyncCallback<T> callback) {
-        String requestUrl = addAutorization(url);
+        String requestUrl = makeRequestUrl(url);
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
         String requestJson = request.toJson();
         GWT.log("[POST]" + requestUrl + "\n" + requestJson);
@@ -128,7 +128,7 @@ public class GitHubApi {
         }
     }
 
-    private String addAutorization(String url) {
+    private String makeRequestUrl(String url) {
         String prefix = "?";
         if (url.contains("?")) {
             prefix = "&";

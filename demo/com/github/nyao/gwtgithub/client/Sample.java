@@ -23,7 +23,7 @@ public class Sample implements EntryPoint {
         $("#LoginSubmit").click(new Function() {
             @Override
             public boolean f(Event e) {
-                api.getRepositories($("#Login").val(), new BuildRepositoryTable());
+                api.getRepos($("#Login").val(), new BuildRepositoryTable());
                 return true;
             }
         });
@@ -31,8 +31,8 @@ public class Sample implements EntryPoint {
         $("#TokenSubmit").click(new Function() {
             @Override
             public boolean f(Event e) {
-                api.setAuthorization($("#Token").val());
-                api.getMyRepository(new BuildRepositoryTable());
+                api.setAccessToken($("#Token").val());
+                api.getRepos(new BuildRepositoryTable());
                 return true;
             }
         });
