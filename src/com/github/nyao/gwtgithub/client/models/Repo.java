@@ -6,8 +6,8 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 
-public class Repository extends JavaScriptObject {
-    protected Repository() {
+public class Repo extends JavaScriptObject {
+    protected Repo() {
     }
 
     public final native String getMirrorUrl() /*-{ return this.mirror_url; }-*/;

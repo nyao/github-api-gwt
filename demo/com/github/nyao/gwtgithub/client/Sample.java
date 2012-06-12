@@ -3,9 +3,9 @@ package com.github.nyao.gwtgithub.client;
 import static com.google.gwt.query.client.GQuery.$;
 
 import com.github.nyao.gwtgithub.client.api.Issues;
-import com.github.nyao.gwtgithub.client.api.Repositories;
+import com.github.nyao.gwtgithub.client.api.Repos;
 import com.github.nyao.gwtgithub.client.models.Issue;
-import com.github.nyao.gwtgithub.client.models.Repository;
+import com.github.nyao.gwtgithub.client.models.Repo;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
@@ -38,13 +38,13 @@ public class Sample implements EntryPoint {
         });
     }
 
-    private final class BuildRepositoryTable implements AsyncCallback<Repositories> {
+    private final class BuildRepositoryTable implements AsyncCallback<Repos> {
         @Override
-        public void onSuccess(Repositories result) {
+        public void onSuccess(Repos result) {
             $("#Repositories tbody tr").remove();
-            JsArray<Repository> data = result.getData();
+            JsArray<Repo> data = result.getData();
             for (int i = 0; i < data.length(); i ++) {
-                Repository r = data.get(i);
+                Repo r = data.get(i);
                 addRepository(r);
             }
         }
@@ -55,7 +55,7 @@ public class Sample implements EntryPoint {
         }
     }
     
-    private void addRepository(final Repository repository) {
+    private void addRepository(final Repo repository) {
         
         GQuery name = $("<td>").text(repository.getName())
                                .append($("<a>").attr("href",   repository.getHtmlUrl())

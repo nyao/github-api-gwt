@@ -4,12 +4,12 @@ import com.github.nyao.gwtgithub.client.api.AUser;
 import com.github.nyao.gwtgithub.client.api.Comments;
 import com.github.nyao.gwtgithub.client.api.Issues;
 import com.github.nyao.gwtgithub.client.api.Milestones;
-import com.github.nyao.gwtgithub.client.api.Repositories;
+import com.github.nyao.gwtgithub.client.api.Repos;
 import com.github.nyao.gwtgithub.client.api.Users;
 import com.github.nyao.gwtgithub.client.models.Comment;
 import com.github.nyao.gwtgithub.client.models.Issue;
 import com.github.nyao.gwtgithub.client.models.Milestone;
-import com.github.nyao.gwtgithub.client.models.Repository;
+import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.values.CommentForSave;
 import com.github.nyao.gwtgithub.client.values.IssueForSave;
 import com.github.nyao.gwtgithub.client.values.MilestoneForSave;
@@ -42,11 +42,11 @@ public class GitHubApi {
         get(baseUrl + "user", callback);
     }
 
-    public void getRepos(AsyncCallback<Repositories> callback) {
+    public void getRepos(AsyncCallback<Repos> callback) {
         get(baseUrl + "user/repos", callback);
     }
 
-    public void getRepos(String user, AsyncCallback<Repositories> callback) {
+    public void getRepos(String user, AsyncCallback<Repos> callback) {
         get(baseUrl + "users/" + user + "/repos", callback);
     }
 
@@ -62,15 +62,15 @@ public class GitHubApi {
         get(baseUrl + "repos/" + user + "/" + repository + "/issues", callback);
     }
 
-    public void getIssues(Repository repository, AsyncCallback<Issues> callback) {
+    public void getIssues(Repo repository, AsyncCallback<Issues> callback) {
         get(repository.getUrl() + "/issues", callback);
     }
 
-    public void createIssue(Repository r, IssueForSave prop, final AsyncCallback<Issue> callback) {
+    public void createIssue(Repo r, IssueForSave prop, final AsyncCallback<Issue> callback) {
         post(r.getUrl() + "/issues", prop, callback);
     }
 
-    public void editIssue(Repository r, Issue issue, IssueForSave prop,
+    public void editIssue(Repo r, Issue issue, IssueForSave prop,
             final AsyncCallback<Issue> callback) {
         if (issue == null) {
             createIssue(r, prop, callback);
@@ -79,20 +79,20 @@ public class GitHubApi {
         }
     }
 
-    public void getComments(Repository r, Issue issue, AsyncCallback<Comments> callback) {
+    public void getComments(Repo r, Issue issue, AsyncCallback<Comments> callback) {
         get(r.getUrl() + "/issues/" + issue.getNumber() + "/comments", callback);
     }
 
-    public void createComment(Repository r, Issue issue, CommentForSave prop,
+    public void createComment(Repo r, Issue issue, CommentForSave prop,
             final AsyncCallback<Comment> callback) {
         post(r.getUrl() + "/issues/" + issue.getNumber() + "/comments", prop, callback);
     }
 
-    public void getMilestones(Repository r, AsyncCallback<Milestones> callback) {
+    public void getMilestones(Repo r, AsyncCallback<Milestones> callback) {
         get(r.getUrl() + "/milestones", callback);
     }
 
-    public void createMilestone(Repository r, MilestoneForSave prop,
+    public void createMilestone(Repo r, MilestoneForSave prop,
             final AsyncCallback<Milestone> callback) {
         post(r.getUrl() + "/milestones", prop, callback);
     }
