@@ -126,22 +126,29 @@ public class GitHubApi {
         String requestUrl = makeRequestUrl(url);
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
         String requestJson = request.toJson();
-        GWT.log("[POST]" + requestUrl + "\n" + requestJson);
+        final StringBuilder log = new StringBuilder();
+        log.append("[POST]" + requestUrl + "\n" + requestJson);
         try {
             builder.sendRequest(requestJson, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
                     T result = JsonUtils.safeEval(response.getText());
+                    log.append("\n\n--" + response.getStatusText() + "\n" + response.getText());
                     callback.onSuccess(result);
+                    GWT.log(log.toString());
                 }
 
                 @Override
-                public void onError(Request request, Throwable exception) {
-                    callback.onFailure(exception);
+                public void onError(Request request, Throwable e) {
+                    log.append("\n\n--" + e.getStackTrace());
+                    callback.onFailure(e);
+                    GWT.log(log.toString());
                 }
             });
         } catch (RequestException e) {
+            log.append("\n\n--" + e.getStackTrace());
             callback.onFailure(e);
+            GWT.log(log.toString());
         }
     }
 
