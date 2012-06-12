@@ -29,6 +29,7 @@ public class GitHubApi {
 
     private String accessToken = null;
     private String baseUrl = "https://api.github.com/";
+    private boolean authorized = false;
 
     public void setGitHubURL(String url) {
         this.baseUrl = url;
@@ -37,9 +38,25 @@ public class GitHubApi {
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
+    
+    public boolean isAuthorized() {
+        return this.authorized;
+    }
 
-    public void getUser(AsyncCallback<AUser> callback) {
-        get(baseUrl + "user", callback);
+    public void getUser(final AsyncCallback<AUser> callback) {
+        AsyncCallback<AUser> hook = new AsyncCallback<AUser>() {
+            @Override
+            public void onSuccess(AUser result) {
+                authorized = true;
+                callback.onSuccess(result);
+            }
+            
+            @Override
+            public void onFailure(Throwable caught) {
+                callback.onFailure(caught);
+            }
+        };
+        get(baseUrl + "user", hook);
     }
 
     public void getRepos(AsyncCallback<Repos> callback) {
