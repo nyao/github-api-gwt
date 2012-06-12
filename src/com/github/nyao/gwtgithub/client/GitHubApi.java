@@ -28,35 +28,38 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class GitHubApi {
 
     private String accessToken = null;
+    private String baseUrl = "https://api.github.com/";
+
+    public void setGitHubURL(String url) {
+        this.baseUrl = url;
+    }
 
     public void setAuthorization(String accessToken) {
         this.accessToken = accessToken;
     }
 
-    private static final String BASE_URL = "https://api.github.com/";
-
     public void getUser(AsyncCallback<AUser> callback) {
-        get(BASE_URL + "user", callback);
+        get(baseUrl + "user", callback);
     }
 
-    public void getMyRepository(AsyncCallback<Repositories> callback) {
-        get(BASE_URL + "user/repos", callback);
+    public void getMyRepositories(AsyncCallback<Repositories> callback) {
+        get(baseUrl + "user/repos", callback);
     }
 
     public void getRepositories(String user, AsyncCallback<Repositories> callback) {
-        get(BASE_URL + "users/" + user + "/repos", callback);
+        get(baseUrl + "users/" + user + "/repos", callback);
     }
 
     public void getOrganizations(String user, AsyncCallback<Users> callback) {
-        get(BASE_URL + "users/" + user + "/orgs", callback);
+        get(baseUrl + "users/" + user + "/orgs", callback);
     }
 
     public void getOrganizations(AsyncCallback<Users> callback) {
-        get(BASE_URL + "user/orgs", callback);
+        get(baseUrl + "user/orgs", callback);
     }
 
     public void getIssues(String user, String repository, AsyncCallback<Issues> callback) {
-        get(BASE_URL + "repos/" + user + "/" + repository + "/issues", callback);
+        get(baseUrl + "repos/" + user + "/" + repository + "/issues", callback);
     }
 
     public void getIssues(Repository repository, AsyncCallback<Issues> callback) {
