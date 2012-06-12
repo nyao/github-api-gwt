@@ -1,7 +1,5 @@
 package com.github.nyao.gwtgithub.client;
 
-import java.util.HashMap;
-
 import com.github.nyao.gwtgithub.client.api.AUser;
 import com.github.nyao.gwtgithub.client.api.Comments;
 import com.github.nyao.gwtgithub.client.api.Issues;
@@ -11,6 +9,7 @@ import com.github.nyao.gwtgithub.client.api.Users;
 import com.github.nyao.gwtgithub.client.models.Comment;
 import com.github.nyao.gwtgithub.client.models.Issue;
 import com.github.nyao.gwtgithub.client.models.Repository;
+import com.github.nyao.gwtgithub.client.values.IssueForSave;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.http.client.Request;
@@ -80,23 +79,28 @@ public class GitHubApi {
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
         jsonp.requestObject(url, callback);
     }
+
+    public void createIssue(Repository r, IssueForSave prop, final AsyncCallback<Issue> callback) {
+        String url = addAutorization(r.getUrl() + "/issues");
+        saveIssue(url, prop, callback);
+    }
     
-    public void editIssue(Repository r, Issue issue, HashMap<Issue.Prop, Object> prop, final AsyncCallback<Issue> callback) {
-        String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber());
+    public void editIssue(Repository r, Issue issue, IssueForSave prop, final AsyncCallback<Issue> callback) {
+        if (issue == null) {
+            createIssue(r, prop, callback);
+        } else {
+            String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber());
+            saveIssue(url, prop, callback);
+        }
+    }
+    
+    protected void saveIssue(String url, IssueForSave prop, final AsyncCallback<Issue> callback) {
         GWT.log(url);
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, url);
-        StringBuilder request = new StringBuilder();
-        request.append("{");
-        for (Issue.Prop key : prop.keySet()) {
-            if (prop.get(key) instanceof String)
-                request.append("\"" + key.name() + "\": \"" + JsonUtils.escapeValue((String) prop.get(key)) + "\"");
-            if (prop.get(key) instanceof Integer)
-                request.append("\"" + key.name() + "\": " + prop.get(key));
-        }
-        request.append("}");
-        GWT.log(request.toString());
+        String request = prop.toJson();
+        GWT.log(request);
         try {
-			builder.sendRequest(request.toString(), new RequestCallback() {
+			builder.sendRequest(request, new RequestCallback() {
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 					Issue result = JsonUtils.safeEval(response.getText());
