@@ -21,4 +21,8 @@ public class Comment extends JavaScriptObject {
 
     public final Date getUpdatedAt() { return DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_SHORT).parse(this.getUpdatedAtString()); }
     public final native String getUpdatedAtString() /*-{ return this.updated_at; }-*/;
+
+    public static enum Prop {
+        body,
+    }
 }

@@ -35,4 +35,11 @@ public class Milestone extends JavaScriptObject {
     public final Date getCreatedAt() { return DateTimeFormat.getFormat(PredefinedFormat.DATE_TIME_SHORT).parse(this.getCreatedAtString()); }
     
     public final native String getCreatedAtString() /*-{ return this.created_at; }-*/;
+
+    public static enum Prop {
+        title,
+        description,
+        state,
+        due_on
+    }
 }
