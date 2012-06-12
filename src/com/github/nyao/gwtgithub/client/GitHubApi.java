@@ -114,6 +114,24 @@ public class GitHubApi {
         post(r.getUrl() + "/milestones", prop, callback);
     }
 
+    public void saveMilestone(Repo r, Milestone m, MilestoneForSave prop,
+            final AsyncCallback<Milestone> callback) {
+        if (m ==null) {
+            createMilestone(r, prop, callback);
+        } else {
+            post(r.getUrl() + "/milestones/" + m.getNumber(), prop, callback);
+        }
+    }
+
+    public void saveMilestone(Repo r, String number, MilestoneForSave prop,
+            final AsyncCallback<Milestone> callback) {
+        if (number ==null) {
+            createMilestone(r, prop, callback);
+        } else {
+            post(r.getUrl() + "/milestones/" + number, prop, callback);
+        }
+    }
+
     private <T extends JavaScriptObject> void get(String url, final AsyncCallback<T> callback) {
         String requestUrl = makeRequestUrl(url);
         GWT.log("[GET]" + requestUrl);
