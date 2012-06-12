@@ -36,46 +36,35 @@ public class GitHubApi {
     private static final String BASE_URL = "https://api.github.com/";
 
     public void getUser(AsyncCallback<AUser> callback) {
-        String url = addAutorization(BASE_URL + "user");
-        get(url, callback);
+        get(BASE_URL + "user", callback);
     }
 
     public void getMyRepository(AsyncCallback<Repositories> callback) {
-        String url = addAutorization(BASE_URL + "user/repos");
-        get(url, callback);
+        get(BASE_URL + "user/repos", callback);
     }
 
     public void getRepositories(String user, AsyncCallback<Repositories> callback) {
-        String url = addAutorization(BASE_URL + "users/" + user + "/repos");
-        get(url, callback);
+        get(BASE_URL + "users/" + user + "/repos", callback);
     }
 
     public void getOrganizations(String user, AsyncCallback<Users> callback) {
-        String url = addAutorization(BASE_URL + "users/" + user + "/orgs");
-        get(url, callback);
+        get(BASE_URL + "users/" + user + "/orgs", callback);
     }
 
     public void getOrganizations(AsyncCallback<Users> callback) {
-        String url = addAutorization(BASE_URL + "user/orgs");
-        get(url, callback);
+        get(BASE_URL + "user/orgs", callback);
     }
 
     public void getIssues(String user, String repository, AsyncCallback<Issues> callback) {
-        String url = addAutorization(BASE_URL + "repos/" + user + "/" + repository + "/issues");
-        getIssues(url, callback);
+        get(BASE_URL + "repos/" + user + "/" + repository + "/issues", callback);
     }
 
     public void getIssues(Repository repository, AsyncCallback<Issues> callback) {
-        getIssues(addAutorization(repository.getUrl() + "/issues"), callback);
-    }
-
-    protected void getIssues(String url, AsyncCallback<Issues> callback) {
-        get(url, callback);
+        get(repository.getUrl() + "/issues", callback);
     }
 
     public void createIssue(Repository r, IssueForSave prop, final AsyncCallback<Issue> callback) {
-        String url = addAutorization(r.getUrl() + "/issues");
-        post(url, prop, callback);
+        post(r.getUrl() + "/issues", prop, callback);
     }
 
     public void editIssue(Repository r, Issue issue, IssueForSave prop,
@@ -83,44 +72,41 @@ public class GitHubApi {
         if (issue == null) {
             createIssue(r, prop, callback);
         } else {
-            String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber());
-            post(url, prop, callback);
+            post(r.getUrl() + "/issues/" + issue.getNumber(), prop, callback);
         }
     }
 
     public void getComments(Repository r, Issue issue, AsyncCallback<Comments> callback) {
-        String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber() + "/comments");
-        get(url, callback);
+        get(r.getUrl() + "/issues/" + issue.getNumber() + "/comments", callback);
     }
 
     public void createComment(Repository r, Issue issue, CommentForSave prop,
             final AsyncCallback<Comment> callback) {
-        String url = addAutorization(r.getUrl() + "/issues/" + issue.getNumber() + "/comments");
-        post(url, prop, callback);
+        post(r.getUrl() + "/issues/" + issue.getNumber() + "/comments", prop, callback);
     }
 
     public void getMilestones(Repository r, AsyncCallback<Milestones> callback) {
-        String url = addAutorization(r.getUrl() + "/milestones");
-        get(url, callback);
+        get(r.getUrl() + "/milestones", callback);
     }
 
     public void createMilestone(Repository r, MilestoneForSave prop,
             final AsyncCallback<Milestone> callback) {
-        String url = addAutorization(r.getUrl() + "/milestones");
-        post(url, prop, callback);
+        post(r.getUrl() + "/milestones", prop, callback);
     }
 
     private <T extends JavaScriptObject> void get(String url, final AsyncCallback<T> callback) {
-        GWT.log("[GET]" + url);
+        String requestUrl = addAutorization(url);
+        GWT.log("[GET]" + requestUrl);
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-        jsonp.requestObject(url, callback);
+        jsonp.requestObject(requestUrl, callback);
     }
 
     private <T extends JavaScriptObject> void post(String url, ValueForSave<?> request,
             final AsyncCallback<T> callback) {
-        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, url);
+        String requestUrl = addAutorization(url);
+        RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
         String requestJson = request.toJson();
-        GWT.log("[POST]" + url + "\n" + requestJson);
+        GWT.log("[POST]" + requestUrl + "\n" + requestJson);
         try {
             builder.sendRequest(requestJson, new RequestCallback() {
                 @Override
