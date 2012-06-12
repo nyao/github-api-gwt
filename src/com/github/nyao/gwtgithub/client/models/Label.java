@@ -11,4 +11,10 @@ public class Label extends JavaScriptObject {
     public final native String getUrl() /*-{ return this.url; }-*/;
     
     public final native String getName() /*-{ return this.name; }-*/;
+
+    public static enum Prop {
+        url,
+        name,
+        color,
+    }
 }
