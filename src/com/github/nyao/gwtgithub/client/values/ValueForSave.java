@@ -25,7 +25,7 @@ public abstract class ValueForSave<T extends Enum<?>> {
                 boolean startV = true;
                 for (String v : vs) {
                     if (!startV) request.append(", "); else startV = false;
-                    request.append(JsonUtils.escapeValue(v) + ",");
+                    request.append(JsonUtils.escapeValue(v));
                 }
                 request.append("]");
             }
