@@ -49,6 +49,10 @@ public class GitHubApi {
     
     // Users
 
+    public void getUser(String login, final AsyncCallback<AUser> callback) {
+        get(baseUrl + "users/" + login, callback);
+    }
+
     public void getUser(final AsyncCallback<AUser> callback) {
         get(baseUrl + "user", callback);
     }
