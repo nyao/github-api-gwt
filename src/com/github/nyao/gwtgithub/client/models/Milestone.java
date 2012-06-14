@@ -2,6 +2,7 @@ package com.github.nyao.gwtgithub.client.models;
 
 import java.util.Date;
 
+import com.github.nyao.gwtgithub.client.values.GHProp;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
@@ -36,10 +37,21 @@ public class Milestone extends JavaScriptObject {
     
     public final native String getCreatedAtString() /*-{ return this.created_at; }-*/;
 
-    public static enum Prop {
-        title,
-        description,
-        state,
-        due_on
+    public static enum Prop implements GHProp {
+        title("title"),
+        description("description"),
+        state("state"),
+        due_on("due_on");
+
+        private final String value;
+        
+        private Prop(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
     }
 }

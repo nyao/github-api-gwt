@@ -2,6 +2,7 @@ package com.github.nyao.gwtgithub.client.models;
 
 import java.util.Date;
 
+import com.github.nyao.gwtgithub.client.values.GHProp;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 
@@ -39,12 +40,23 @@ public class Issue extends JavaScriptObject {
     
     public final native PullRequest getPullRequest() /*-{ return this.pull_request; }-*/;
 
-    public static enum Prop {
-        title,
-        body,
-        assignee,
-        state,
-        milestone,
-        labels
+    public static enum Prop implements GHProp {
+        Title("title"),
+        Body("body"),
+        Assignee("assignee"),
+        State("state"),
+        Milestone("milestone"),
+        Labels("labels");
+
+        private final String value;
+        
+        private Prop(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
     }
 }

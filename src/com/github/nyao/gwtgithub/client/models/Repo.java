@@ -77,4 +77,21 @@ public class Repo extends JavaScriptObject {
     // single only
     
     public final native GHUser getOrganization() /*-{ return this.organization; }-*/;
+
+    public static enum Prop {
+        Name("name"),
+        Description("description"),
+        Homepage("homepage"),
+        Private("private"),
+        HasIssues("has_issues"),
+        HasWiki("has_wiki"),
+        HasDownload("has_downloads"),
+        TeamID("team_id"),
+        ;
+        public final String value;
+
+        private Prop(String value) {
+            this.value = value;
+        }
+    }
 }
