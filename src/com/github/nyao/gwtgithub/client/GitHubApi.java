@@ -50,19 +50,7 @@ public class GitHubApi {
     // Users
 
     public void getUser(final AsyncCallback<AUser> callback) {
-        AsyncCallback<AUser> hook = new AsyncCallback<AUser>() {
-            @Override
-            public void onSuccess(AUser result) {
-                authorized = true;
-                callback.onSuccess(result);
-            }
-            
-            @Override
-            public void onFailure(Throwable caught) {
-                callback.onFailure(caught);
-            }
-        };
-        get(baseUrl + "user", hook);
+        get(baseUrl + "user", callback);
     }
     
     // Repos
@@ -170,19 +158,35 @@ public class GitHubApi {
     
     
     // private methods
+    
+    private <T extends JavaScriptObject> AsyncCallback<T> hookCallback(final AsyncCallback<T> callback) {
+        return new AsyncCallback<T>() {
+            @Override
+            public void onSuccess(T result) {
+                if (accessToken != null) authorized = true;
+                callback.onSuccess(result);
+            }
+            
+            @Override
+            public void onFailure(Throwable caught) {
+                callback.onFailure(caught);
+            }
+        };
+    }
 
     private <T extends JavaScriptObject> void get(String url, final AsyncCallback<T> callback) {
         String requestUrl = makeRequestUrl(url);
         GWT.log("[GET]" + requestUrl);
         JsonpRequestBuilder jsonp = new JsonpRequestBuilder();
-        jsonp.requestObject(requestUrl, callback);
+        jsonp.requestObject(requestUrl, hookCallback(callback));
     }
 
     private <T extends JavaScriptObject> void post(String url, ValueForSave<?> request,
-            final AsyncCallback<T> callback) {
+            AsyncCallback<T> callback) {
         String requestUrl = makeRequestUrl(url);
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
         String requestJson = request.toJson();
+        final AsyncCallback<T> hookedCallback = hookCallback(callback);
         final StringBuilder log = new StringBuilder();
         log.append("[POST]" + requestUrl + "\n" + requestJson);
         try {
@@ -191,20 +195,20 @@ public class GitHubApi {
                 public void onResponseReceived(Request request, Response response) {
                     T result = JsonUtils.safeEval(response.getText());
                     log.append("\n\n--" + response.getStatusText() + "\n" + response.getText());
-                    callback.onSuccess(result);
+                    hookedCallback.onSuccess(result);
                     GWT.log(log.toString());
                 }
 
                 @Override
                 public void onError(Request request, Throwable e) {
                     log.append("\n\n--" + e.getStackTrace());
-                    callback.onFailure(e);
+                    hookedCallback.onFailure(e);
                     GWT.log(log.toString());
                 }
             });
         } catch (RequestException e) {
             log.append("\n\n--" + e.getStackTrace());
-            callback.onFailure(e);
+            hookedCallback.onFailure(e);
             GWT.log(log.toString());
         }
     }
