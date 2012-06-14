@@ -164,6 +164,15 @@ public class GitHubApi {
             post(r.getUrl() + "/labels/" + URL.encode(name), prop, callback);
         }
     }
+
+    public void saveLabel(Repo r, Label label, LabelForSave prop,
+            final AsyncCallback<Label> callback) {
+        if (label == null) {
+            createLabel(r, prop, callback);
+        } else {
+            post(r.getUrl() + "/labels/" + URL.encode(label.getName()), prop, callback);
+        }
+    }
     
     
     // private methods
