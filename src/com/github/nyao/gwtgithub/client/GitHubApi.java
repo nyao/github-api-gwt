@@ -16,6 +16,7 @@ import com.github.nyao.gwtgithub.client.values.CommentForSave;
 import com.github.nyao.gwtgithub.client.values.IssueForSave;
 import com.github.nyao.gwtgithub.client.values.LabelForSave;
 import com.github.nyao.gwtgithub.client.values.MilestoneForSave;
+import com.github.nyao.gwtgithub.client.values.RepoForSave;
 import com.github.nyao.gwtgithub.client.values.ValueForSave;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -65,6 +66,10 @@ public class GitHubApi {
 
     public void getRepos(String user, AsyncCallback<Repos> callback) {
         get(baseUrl + "users/" + user + "/repos", callback);
+    }
+    
+    public void saveRepo(Repo r, RepoForSave prop, AsyncCallback<Repo> callback) {
+        post(r.getUrl(), prop, callback);
     }
     
     // Orgs

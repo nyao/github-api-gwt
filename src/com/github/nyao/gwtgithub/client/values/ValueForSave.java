@@ -19,6 +19,8 @@ public abstract class ValueForSave<T extends GHProp> {
                 request.append("\"" + key.value() + "\": " + JsonUtils.escapeValue((String) value));
             else if (value instanceof Integer)
                 request.append("\"" + key.value() + "\": " + value);
+            else if (value instanceof Boolean)
+                request.append("\"" + key.value() + "\": " + value);
             else if (value instanceof String[]) {
                 String[] vs = (String[]) value;
                 request.append("\"" + key.value() + "\": [");
