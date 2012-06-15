@@ -1,6 +1,9 @@
-package com.github.nyao.gwtgithub.client.values;
+package com.github.nyao.gwtgithub.client.values.issues;
 
 import java.util.Date;
+
+import com.github.nyao.gwtgithub.client.values.GHValue;
+import com.github.nyao.gwtgithub.client.values.ValueProp;
 
 public class MilestoneValue extends GHValue<MilestoneValue.Prop> {
 

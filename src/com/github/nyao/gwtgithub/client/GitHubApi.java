@@ -1,18 +1,17 @@
 package com.github.nyao.gwtgithub.client;
 
 import com.github.nyao.gwtgithub.client.api.AUser;
+
 import com.github.nyao.gwtgithub.client.api.IssueComments;
 import com.github.nyao.gwtgithub.client.api.Issues;
 import com.github.nyao.gwtgithub.client.api.Labels;
 import com.github.nyao.gwtgithub.client.api.Milestones;
 import com.github.nyao.gwtgithub.client.api.Repos;
 import com.github.nyao.gwtgithub.client.api.Users;
-import com.github.nyao.gwtgithub.client.models.Issue;
-import com.github.nyao.gwtgithub.client.models.IssueComment;
-import com.github.nyao.gwtgithub.client.models.Label;
-import com.github.nyao.gwtgithub.client.models.Milestone;
+import com.github.nyao.gwtgithub.client.models.issues.*;
 import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.values.*;
+import com.github.nyao.gwtgithub.client.values.issues.*;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsonUtils;

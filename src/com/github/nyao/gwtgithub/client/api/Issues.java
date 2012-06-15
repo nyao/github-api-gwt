@@ -1,6 +1,7 @@
 package com.github.nyao.gwtgithub.client.api;
 
-import com.github.nyao.gwtgithub.client.models.Issue;
+import com.github.nyao.gwtgithub.client.models.issues.*;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 

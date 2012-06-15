@@ -4,7 +4,7 @@ import static com.google.gwt.query.client.GQuery.$;
 
 import com.github.nyao.gwtgithub.client.api.Issues;
 import com.github.nyao.gwtgithub.client.api.Repos;
-import com.github.nyao.gwtgithub.client.models.Issue;
+import com.github.nyao.gwtgithub.client.models.issues.*;
 import com.github.nyao.gwtgithub.client.models.Repo;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;

@@ -1,4 +1,7 @@
-package com.github.nyao.gwtgithub.client.values;
+package com.github.nyao.gwtgithub.client.values.gitdata;
+
+import com.github.nyao.gwtgithub.client.values.GHValue;
+import com.github.nyao.gwtgithub.client.values.ValueProp;
 
 
 public class ReferenceValue extends GHValue<ReferenceValue.Prop> {

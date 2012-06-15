@@ -1,4 +1,7 @@
-package com.github.nyao.gwtgithub.client.values;
+package com.github.nyao.gwtgithub.client.values.issues;
+
+import com.github.nyao.gwtgithub.client.values.GHValue;
+import com.github.nyao.gwtgithub.client.values.ValueProp;
 
 public class LabelValue extends GHValue<LabelValue.Prop> {
 

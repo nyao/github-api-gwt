@@ -6,7 +6,7 @@ import com.google.gwt.core.client.JsonUtils;
 
 public abstract class GHValue<T extends ValueProp> {
 
-    HashMap<T, Object> prop = new HashMap<T, Object>();
+    protected HashMap<T, Object> prop = new HashMap<T, Object>();
 
     public String toJson() {
         StringBuilder request = new StringBuilder();
