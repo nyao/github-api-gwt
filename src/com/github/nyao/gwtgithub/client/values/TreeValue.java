@@ -38,7 +38,7 @@ public class TreeValue extends GHValue<TreeValue.Prop> {
         prop.put(Prop.Sha, sha);
     }
 
-    public void setTree(TreeValue tree) {
+    public void setTree(TreeValue[] tree) {
         prop.put(Prop.Tree, tree);
     }
 }
