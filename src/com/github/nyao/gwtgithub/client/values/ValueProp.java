@@ -1,6 +1,6 @@
 package com.github.nyao.gwtgithub.client.values;
 
-public interface GHProp {
+public interface ValueProp {
 
     public String value();
 }

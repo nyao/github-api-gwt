@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.google.gwt.core.client.JsonUtils;
 
-public abstract class ValueForSave<T extends GHProp> {
+public abstract class GHValue<T extends ValueProp> {
 
     HashMap<T, Object> prop = new HashMap<T, Object>();
 

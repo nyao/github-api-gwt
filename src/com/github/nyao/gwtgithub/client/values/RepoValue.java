@@ -1,10 +1,30 @@
 package com.github.nyao.gwtgithub.client.values;
 
-import com.github.nyao.gwtgithub.client.models.Repo.Prop;
 
+public class RepoValue extends GHValue<RepoValue.Prop> {
 
-public class RepoForSave extends ValueForSave<Prop> {
+    public static enum Prop implements ValueProp {
+        Name("name"),
+        Description("description"),
+        Homepage("homepage"),
+        Private("private"),
+        HasIssues("has_issues"),
+        HasWiki("has_wiki"),
+        HasDownload("has_downloads"),
+        TeamID("team_id"),
+        ;
+        public final String value;
 
+        private Prop(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String value() {
+            return value;
+        }
+    }
+    
     public void setName(String name) {
         prop.put(Prop.Name, name);
     }

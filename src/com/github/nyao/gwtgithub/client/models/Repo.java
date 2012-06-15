@@ -2,7 +2,6 @@ package com.github.nyao.gwtgithub.client.models;
 
 import java.util.Date;
 
-import com.github.nyao.gwtgithub.client.values.GHProp;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
@@ -79,25 +78,4 @@ public class Repo extends JavaScriptObject {
     
     public final native GHUser getOrganization() /*-{ return this.organization; }-*/;
 
-    public static enum Prop implements GHProp {
-        Name("name"),
-        Description("description"),
-        Homepage("homepage"),
-        Private("private"),
-        HasIssues("has_issues"),
-        HasWiki("has_wiki"),
-        HasDownload("has_downloads"),
-        TeamID("team_id"),
-        ;
-        public final String value;
-
-        private Prop(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String value() {
-            return value;
-        }
-    }
 }

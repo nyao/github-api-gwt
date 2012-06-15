@@ -1,23 +1,18 @@
 package com.github.nyao.gwtgithub.client;
 
 import com.github.nyao.gwtgithub.client.api.AUser;
-import com.github.nyao.gwtgithub.client.api.Comments;
+import com.github.nyao.gwtgithub.client.api.IssueComments;
 import com.github.nyao.gwtgithub.client.api.Issues;
 import com.github.nyao.gwtgithub.client.api.Labels;
 import com.github.nyao.gwtgithub.client.api.Milestones;
 import com.github.nyao.gwtgithub.client.api.Repos;
 import com.github.nyao.gwtgithub.client.api.Users;
-import com.github.nyao.gwtgithub.client.models.Comment;
 import com.github.nyao.gwtgithub.client.models.Issue;
+import com.github.nyao.gwtgithub.client.models.IssueComment;
 import com.github.nyao.gwtgithub.client.models.Label;
 import com.github.nyao.gwtgithub.client.models.Milestone;
 import com.github.nyao.gwtgithub.client.models.Repo;
-import com.github.nyao.gwtgithub.client.values.CommentForSave;
-import com.github.nyao.gwtgithub.client.values.IssueForSave;
-import com.github.nyao.gwtgithub.client.values.LabelForSave;
-import com.github.nyao.gwtgithub.client.values.MilestoneForSave;
-import com.github.nyao.gwtgithub.client.values.RepoForSave;
-import com.github.nyao.gwtgithub.client.values.ValueForSave;
+import com.github.nyao.gwtgithub.client.values.*;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsonUtils;
@@ -68,7 +63,7 @@ public class GitHubApi {
         get(baseUrl + "users/" + user + "/repos", callback);
     }
     
-    public void saveRepo(Repo r, RepoForSave prop, AsyncCallback<Repo> callback) {
+    public void saveRepo(Repo r, RepoValue prop, AsyncCallback<Repo> callback) {
         post(r.getUrl(), prop, callback);
     }
     
@@ -92,11 +87,11 @@ public class GitHubApi {
         get(repository.getUrl() + "/issues", callback);
     }
 
-    public void createIssue(Repo r, IssueForSave prop, final AsyncCallback<Issue> callback) {
+    public void createIssue(Repo r, IssueValue prop, final AsyncCallback<Issue> callback) {
         post(r.getUrl() + "/issues", prop, callback);
     }
 
-    public void editIssue(Repo r, Issue issue, IssueForSave prop,
+    public void editIssue(Repo r, Issue issue, IssueValue prop,
             final AsyncCallback<Issue> callback) {
         if (issue == null) {
             createIssue(r, prop, callback);
@@ -107,12 +102,12 @@ public class GitHubApi {
     
     // Comments
 
-    public void getComments(Repo r, Issue issue, AsyncCallback<Comments> callback) {
+    public void getIssueComments(Repo r, Issue issue, AsyncCallback<IssueComments> callback) {
         get(r.getUrl() + "/issues/" + issue.getNumber() + "/comments", callback);
     }
 
-    public void createComment(Repo r, Issue issue, CommentForSave prop,
-            final AsyncCallback<Comment> callback) {
+    public void createIssueComment(Repo r, Issue issue, IssueCommentValue prop,
+            final AsyncCallback<IssueComment> callback) {
         post(r.getUrl() + "/issues/" + issue.getNumber() + "/comments", prop, callback);
     }
     
@@ -122,12 +117,12 @@ public class GitHubApi {
         get(r.getUrl() + "/milestones", callback);
     }
 
-    public void createMilestone(Repo r, MilestoneForSave prop,
+    public void createMilestone(Repo r, MilestoneValue prop,
             final AsyncCallback<Milestone> callback) {
         post(r.getUrl() + "/milestones", prop, callback);
     }
 
-    public void saveMilestone(Repo r, Milestone m, MilestoneForSave prop,
+    public void saveMilestone(Repo r, Milestone m, MilestoneValue prop,
             final AsyncCallback<Milestone> callback) {
         if (m ==null) {
             createMilestone(r, prop, callback);
@@ -136,7 +131,7 @@ public class GitHubApi {
         }
     }
 
-    public void saveMilestone(Repo r, String number, MilestoneForSave prop,
+    public void saveMilestone(Repo r, String number, MilestoneValue prop,
             final AsyncCallback<Milestone> callback) {
         if (number ==null) {
             createMilestone(r, prop, callback);
@@ -151,12 +146,12 @@ public class GitHubApi {
         get(r.getUrl() + "/labels", callback);
     }
 
-    public void createLabel(Repo r, LabelForSave prop,
+    public void createLabel(Repo r, LabelValue prop,
             final AsyncCallback<Label> callback) {
         post(r.getUrl() + "/labels", prop, callback);
     }
 
-    public void saveLabel(Repo r, String name, LabelForSave prop,
+    public void saveLabel(Repo r, String name, LabelValue prop,
             final AsyncCallback<Label> callback) {
         if (name == null) {
             createLabel(r, prop, callback);
@@ -165,7 +160,7 @@ public class GitHubApi {
         }
     }
 
-    public void saveLabel(Repo r, Label label, LabelForSave prop,
+    public void saveLabel(Repo r, Label label, LabelValue prop,
             final AsyncCallback<Label> callback) {
         if (label == null) {
             createLabel(r, prop, callback);
@@ -199,7 +194,7 @@ public class GitHubApi {
         jsonp.requestObject(requestUrl, hookCallback(callback));
     }
 
-    private <T extends JavaScriptObject> void post(String url, ValueForSave<?> request,
+    private <T extends JavaScriptObject> void post(String url, GHValue<?> request,
             AsyncCallback<T> callback) {
         String requestUrl = makeRequestUrl(url);
         RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
