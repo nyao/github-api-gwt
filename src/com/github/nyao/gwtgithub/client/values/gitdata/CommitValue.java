@@ -31,9 +31,14 @@ public class CommitValue extends GHValue<CommitValue.Prop> {
     public void setAuthor(CommiterValue author) {
         prop.put(Prop.Author, author);
     }
+    
+    public void setParent(String parent) {
+        String[] v = {parent};
+        prop.put(Prop.Parents, v);
+    }
 
-    public void setParent(String[] parent) {
-        prop.put(Prop.Parents, parent);
+    public void setParents(String[] parents) {
+        prop.put(Prop.Parents, parents);
     }
 
     public void setTree(String tree) {
