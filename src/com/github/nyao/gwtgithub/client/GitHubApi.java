@@ -16,7 +16,8 @@ import com.github.nyao.gwtgithub.client.values.GHValue;
 import com.github.nyao.gwtgithub.client.values.RepoValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.CommitValue;
-import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceCreateValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceUpdateValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.TreeValue;
 import com.github.nyao.gwtgithub.client.values.issues.IssueCommentValue;
 import com.github.nyao.gwtgithub.client.values.issues.IssueValue;
@@ -92,12 +93,12 @@ public class GitHubApi {
     
     // Issues
 
-    public void getIssues(String user, String repository, AsyncCallback<JSONs<Issue>> callback) {
-        get(baseUrl + "repos/" + user + "/" + repository + "/issues", callback);
+    public void getIssues(String user, String r, AsyncCallback<JSONs<Issue>> callback) {
+        get(baseUrl + "repos/" + user + "/" + r + "/issues", callback);
     }
 
-    public void getIssues(Repo repository, AsyncCallback<JSONs<Issue>> callback) {
-        get(repository.getUrl() + "/issues", callback);
+    public void getIssues(Repo r, AsyncCallback<JSONs<Issue>> callback) {
+        get(r.getUrl() + "/issues", callback);
     }
 
     public void createIssue(Repo r, IssueValue prop, final AsyncCallback<Issue> callback) {
@@ -203,7 +204,7 @@ public class GitHubApi {
 
     // References
 
-    public void createReference(Repo r, ReferenceValue ref, AsyncCallback<Reference> callback) {
+    public void createReference(Repo r, ReferenceCreateValue ref, AsyncCallback<Reference> callback) {
         post(r.getUrl() + "/git/refs", ref, callback);
     }
     

@@ -93,7 +93,7 @@ public class Note implements EntryPoint {
         @Override
         public void onSuccess(Commit commit) {
             // Reference
-            ReferenceValue ref = new ReferenceValue();
+            ReferenceCreateValue ref = new ReferenceCreateValue();
             ref.setRef("refs/heads/boostgh2");
             ref.setSha(commit.getSha());
             api.createReference(r, ref, new AsyncCallback<Reference>() {

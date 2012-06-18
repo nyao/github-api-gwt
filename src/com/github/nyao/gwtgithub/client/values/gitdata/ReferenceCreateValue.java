@@ -4,7 +4,7 @@ import com.github.nyao.gwtgithub.client.values.GHValue;
 import com.github.nyao.gwtgithub.client.values.ValueProp;
 
 
-public class ReferenceValue extends GHValue<ReferenceValue.Prop> {
+public class ReferenceCreateValue extends GHValue<ReferenceCreateValue.Prop> {
 
     public static enum Prop implements ValueProp {
         Ref("ref"),
