@@ -30,8 +30,19 @@ public abstract class GHValue<T extends ValueProp> {
                     request.append(JsonUtils.escapeValue(v));
                 }
                 request.append("]");
-            }
-            else if (value == null)
+            } else if (value instanceof GHValue) {
+                GHValue<?> v = (GHValue<?>) value;
+                request.append("\"" + key.value() + "\": " + v.toJson()); // should be escaped value.
+            } else if (value instanceof GHValue[]) {
+                GHValue<?>[] vs = (GHValue[]) value;
+                request.append("\"" + key.value() + "\": [");
+                boolean startV = true;
+                for (GHValue<?> v : vs) {
+                    if (!startV) request.append(", "); else startV = false;
+                    request.append(v.toJson()); // should be escaped value.
+                }
+                request.append("]");
+            } else if (value == null)
                 request.append("\"" + key.value() + "\": null");
         }
         return "{" + request.toString() + "}";
