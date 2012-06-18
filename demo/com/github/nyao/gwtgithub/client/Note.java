@@ -55,7 +55,7 @@ public class Note implements EntryPoint {
             tree[0].setSha(blob.getSha());
             tree[0].setPath("order");
             tree[0].setType("blob");
-            tree[0].setMode("10644");
+            tree[0].setMode("100644");
             
             api.createTree(r, rootTree, new CreateCommit());
         }
