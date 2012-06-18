@@ -208,6 +208,10 @@ public class GitHubApi {
         post(r.getUrl() + "/git/refs", ref, callback);
     }
     
+    public void updateReference(Repo r, String refName, ReferenceUpdateValue ref, AsyncCallback<Reference> callback) {
+        post(r.getUrl() + "/git/" + URL.encode(refName), ref, callback);
+    }
+    
     // private methods
     
     private <T extends JavaScriptObject> AsyncCallback<T> hookCallback(final AsyncCallback<T> callback) {
