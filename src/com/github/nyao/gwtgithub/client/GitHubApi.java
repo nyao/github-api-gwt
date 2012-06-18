@@ -4,12 +4,20 @@ import com.github.nyao.gwtgithub.client.api.AJSON;
 import com.github.nyao.gwtgithub.client.api.JSONs;
 import com.github.nyao.gwtgithub.client.models.GHUser;
 import com.github.nyao.gwtgithub.client.models.Repo;
+import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
+import com.github.nyao.gwtgithub.client.models.gitdata.Commit;
+import com.github.nyao.gwtgithub.client.models.gitdata.Reference;
+import com.github.nyao.gwtgithub.client.models.gitdata.Tree;
 import com.github.nyao.gwtgithub.client.models.issues.Issue;
 import com.github.nyao.gwtgithub.client.models.issues.IssueComment;
 import com.github.nyao.gwtgithub.client.models.issues.Label;
 import com.github.nyao.gwtgithub.client.models.issues.Milestone;
 import com.github.nyao.gwtgithub.client.values.GHValue;
 import com.github.nyao.gwtgithub.client.values.RepoValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.CommitValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.TreeValue;
 import com.github.nyao.gwtgithub.client.values.issues.IssueCommentValue;
 import com.github.nyao.gwtgithub.client.values.issues.IssueValue;
 import com.github.nyao.gwtgithub.client.values.issues.LabelValue;
@@ -62,6 +70,10 @@ public class GitHubApi {
 
     public void getRepos(String user, AsyncCallback<JSONs<Repo>> callback) {
         get(baseUrl + "users/" + user + "/repos", callback);
+    }
+
+    public void getRepo(String login, String name, AsyncCallback<AJSON<Repo>> callback) {
+        get(baseUrl + "repos/" + URL.encode(login) + "/" + URL.encode(name), callback);
     }
     
     public void saveRepo(Repo r, RepoValue prop, AsyncCallback<Repo> callback) {
@@ -170,6 +182,30 @@ public class GitHubApi {
         }
     }
     
+
+    // Blobs
+
+    public void createBlob(Repo r, BlobValue blob, AsyncCallback<BlobCreated> callback) {
+        post(r.getUrl() + "/git/blobs", blob, callback);
+    }
+
+    // Trees
+
+    public void createTree(Repo r, TreeValue tree, AsyncCallback<Tree> callback) {
+        post(r.getUrl() + "/git/trees", tree, callback);
+    }
+
+    // Commits
+
+    public void createCommit(Repo r, CommitValue commit, AsyncCallback<Commit> callback) {
+        post(r.getUrl() + "/git/commits", commit, callback);
+    }
+
+    // References
+
+    public void createReference(Repo r, ReferenceValue ref, AsyncCallback<Reference> callback) {
+        post(r.getUrl() + "/git/refs", ref, callback);
+    }
     
     // private methods
     
@@ -208,7 +244,7 @@ public class GitHubApi {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
                     T result = JsonUtils.safeEval(response.getText());
-                    log.append("\n\n--" + response.getStatusText() + "\n" + response.getText());
+                    log.append("\n\n--" + response.getStatusText() + ":" + response.getStatusCode() + "\n" + response.getText());
                     hookedCallback.onSuccess(result);
                     GWT.log(log.toString());
                 }
