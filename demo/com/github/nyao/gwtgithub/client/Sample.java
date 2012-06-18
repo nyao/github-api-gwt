@@ -2,10 +2,9 @@ package com.github.nyao.gwtgithub.client;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-import com.github.nyao.gwtgithub.client.api.Issues;
-import com.github.nyao.gwtgithub.client.api.Repos;
-import com.github.nyao.gwtgithub.client.models.issues.*;
+import com.github.nyao.gwtgithub.client.api.JSONs;
 import com.github.nyao.gwtgithub.client.models.Repo;
+import com.github.nyao.gwtgithub.client.models.issues.Issue;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
@@ -38,9 +37,9 @@ public class Sample implements EntryPoint {
         });
     }
 
-    private final class BuildRepositoryTable implements AsyncCallback<Repos> {
+    private final class BuildRepositoryTable implements AsyncCallback<JSONs<Repo>> {
         @Override
-        public void onSuccess(Repos result) {
+        public void onSuccess(JSONs<Repo> result) {
             $("#Repositories tbody tr").remove();
             JsArray<Repo> data = result.getData();
             for (int i = 0; i < data.length(); i ++) {
@@ -78,9 +77,9 @@ public class Sample implements EntryPoint {
         $("#Repositories tbody").append($(tr));
     }
 
-    private final class BuildIssuesTable implements AsyncCallback<Issues> {
+    private final class BuildIssuesTable implements AsyncCallback<JSONs<Issue>> {
         @Override
-        public void onSuccess(Issues result) {
+        public void onSuccess(JSONs<Issue> result) {
             $("#Issues tbody tr").remove();
             JsArray<Issue> data = result.getData();
             for (int i = 0; i < data.length(); i ++) {

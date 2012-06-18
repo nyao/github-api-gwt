@@ -1,17 +1,19 @@
 package com.github.nyao.gwtgithub.client;
 
-import com.github.nyao.gwtgithub.client.api.AUser;
-
-import com.github.nyao.gwtgithub.client.api.IssueComments;
-import com.github.nyao.gwtgithub.client.api.Issues;
-import com.github.nyao.gwtgithub.client.api.Labels;
-import com.github.nyao.gwtgithub.client.api.Milestones;
-import com.github.nyao.gwtgithub.client.api.Repos;
-import com.github.nyao.gwtgithub.client.api.Users;
-import com.github.nyao.gwtgithub.client.models.issues.*;
+import com.github.nyao.gwtgithub.client.api.AJSON;
+import com.github.nyao.gwtgithub.client.api.JSONs;
+import com.github.nyao.gwtgithub.client.models.GHUser;
 import com.github.nyao.gwtgithub.client.models.Repo;
-import com.github.nyao.gwtgithub.client.values.*;
-import com.github.nyao.gwtgithub.client.values.issues.*;
+import com.github.nyao.gwtgithub.client.models.issues.Issue;
+import com.github.nyao.gwtgithub.client.models.issues.IssueComment;
+import com.github.nyao.gwtgithub.client.models.issues.Label;
+import com.github.nyao.gwtgithub.client.models.issues.Milestone;
+import com.github.nyao.gwtgithub.client.values.GHValue;
+import com.github.nyao.gwtgithub.client.values.RepoValue;
+import com.github.nyao.gwtgithub.client.values.issues.IssueCommentValue;
+import com.github.nyao.gwtgithub.client.values.issues.IssueValue;
+import com.github.nyao.gwtgithub.client.values.issues.LabelValue;
+import com.github.nyao.gwtgithub.client.values.issues.MilestoneValue;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsonUtils;
@@ -44,21 +46,21 @@ public class GitHubApi {
     
     // Users
 
-    public void getUser(String login, final AsyncCallback<AUser> callback) {
+    public void getUser(String login, final AsyncCallback<AJSON<GHUser>> callback) {
         get(baseUrl + "users/" + login, callback);
     }
 
-    public void getUser(final AsyncCallback<AUser> callback) {
+    public void getUser(final AsyncCallback<AJSON<GHUser>> callback) {
         get(baseUrl + "user", callback);
     }
     
     // Repos
 
-    public void getRepos(AsyncCallback<Repos> callback) {
+    public void getRepos(AsyncCallback<JSONs<Repo>> callback) {
         get(baseUrl + "user/repos", callback);
     }
 
-    public void getRepos(String user, AsyncCallback<Repos> callback) {
+    public void getRepos(String user, AsyncCallback<JSONs<Repo>> callback) {
         get(baseUrl + "users/" + user + "/repos", callback);
     }
     
@@ -68,21 +70,21 @@ public class GitHubApi {
     
     // Orgs
 
-    public void getOrgs(String user, AsyncCallback<Users> callback) {
+    public void getOrgs(String user, AsyncCallback<JSONs<GHUser>> callback) {
         get(baseUrl + "users/" + user + "/orgs", callback);
     }
 
-    public void getOrgs(AsyncCallback<Users> callback) {
+    public void getOrgs(AsyncCallback<JSONs<GHUser>> callback) {
         get(baseUrl + "user/orgs", callback);
     }
     
     // Issues
 
-    public void getIssues(String user, String repository, AsyncCallback<Issues> callback) {
+    public void getIssues(String user, String repository, AsyncCallback<JSONs<Issue>> callback) {
         get(baseUrl + "repos/" + user + "/" + repository + "/issues", callback);
     }
 
-    public void getIssues(Repo repository, AsyncCallback<Issues> callback) {
+    public void getIssues(Repo repository, AsyncCallback<JSONs<Issue>> callback) {
         get(repository.getUrl() + "/issues", callback);
     }
 
@@ -101,7 +103,7 @@ public class GitHubApi {
     
     // Comments
 
-    public void getIssueComments(Repo r, Issue issue, AsyncCallback<IssueComments> callback) {
+    public void getIssueComments(Repo r, Issue issue, AsyncCallback<JSONs<IssueComment>> callback) {
         get(r.getUrl() + "/issues/" + issue.getNumber() + "/comments", callback);
     }
 
@@ -112,7 +114,7 @@ public class GitHubApi {
     
     // Milestones
 
-    public void getMilestones(Repo r, AsyncCallback<Milestones> callback) {
+    public void getMilestones(Repo r, AsyncCallback<JSONs<Milestone>> callback) {
         get(r.getUrl() + "/milestones", callback);
     }
 
@@ -141,7 +143,7 @@ public class GitHubApi {
     
     // Labels
     
-    public void getLabels(Repo r, AsyncCallback<Labels> callback) {
+    public void getLabels(Repo r, AsyncCallback<JSONs<Label>> callback) {
         get(r.getUrl() + "/labels", callback);
     }
 
