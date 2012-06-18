@@ -8,7 +8,7 @@ public class CommiterValue extends GHValue<CommiterValue.Prop> {
 
     public static enum Prop implements ValueProp {
         Date("date"),
-        Name("Name"),
+        Name("name"),
         Email("email"),
         ;
         public final String value;
