@@ -55,7 +55,7 @@ public class GitHubApi {
     // Users
 
     public void getUser(String login, final AsyncCallback<AJSON<GHUser>> callback) {
-        get(baseUrl + "users/" + login, callback);
+        get(baseUrl + "users/" + URL.encode(login), callback);
     }
 
     public void getUser(final AsyncCallback<AJSON<GHUser>> callback) {
@@ -69,7 +69,7 @@ public class GitHubApi {
     }
 
     public void getRepos(String user, AsyncCallback<JSONs<Repo>> callback) {
-        get(baseUrl + "users/" + user + "/repos", callback);
+        get(baseUrl + "users/" + URL.encode(user) + "/repos", callback);
     }
 
     public void getRepo(String login, String name, AsyncCallback<AJSON<Repo>> callback) {
@@ -149,7 +149,7 @@ public class GitHubApi {
         if (number ==null) {
             createMilestone(r, prop, callback);
         } else {
-            post(r.getUrl() + "/milestones/" + number, prop, callback);
+            post(r.getUrl() + "/milestones/" + URL.encode(number), prop, callback);
         }
     }
     
