@@ -4,6 +4,7 @@ import com.github.nyao.gwtgithub.client.models.AJSON;
 import com.github.nyao.gwtgithub.client.models.GHUser;
 import com.github.nyao.gwtgithub.client.models.JSONs;
 import com.github.nyao.gwtgithub.client.models.Repo;
+import com.github.nyao.gwtgithub.client.models.gitdata.Blob;
 import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
 import com.github.nyao.gwtgithub.client.models.gitdata.Commit;
 import com.github.nyao.gwtgithub.client.models.gitdata.Reference;
@@ -186,17 +187,37 @@ public class GitHubApi {
 
     // Blobs
 
+    public void getBlob(Repo r, String sha, AsyncCallback<AJSON<Blob>> callback) {
+        get(r.getUrl() + "/git/blobs/" + URL.encode(sha), callback);
+    }
+    
+    public void getBlob(Repo repo, Reference ref, final String filename, final AsyncCallback<AJSON<Blob>> callback) {
+        new GitHubSimpleApi(this, repo).getBlob(ref, filename, callback);
+    }
+
     public void createBlob(Repo r, BlobValue blob, AsyncCallback<BlobCreated> callback) {
         post(r.getUrl() + "/git/blobs", blob, callback);
     }
 
     // Trees
 
+    public void getTree(Repo r, String sha, AsyncCallback<AJSON<Tree>> callback) {
+        get(r.getUrl() + "/git/trees/" + URL.encode(sha), callback);
+    }
+
     public void createTree(Repo r, TreeValue tree, AsyncCallback<Tree> callback) {
         post(r.getUrl() + "/git/trees", tree, callback);
     }
 
     // Commits
+    
+    public void getCommit(Repo r, String sha, AsyncCallback<AJSON<Commit>> callback) {
+        get(r.getUrl() + "/commits/" + URL.encode(sha), callback);
+    }
+
+    public void getCommit(Reference ref, AsyncCallback<AJSON<Commit>> callback) {
+        get(ref.getObject().getUrl(), callback);
+    }
 
     public void createCommit(Repo r, CommitValue commit, AsyncCallback<Commit> callback) {
         post(r.getUrl() + "/git/commits", commit, callback);

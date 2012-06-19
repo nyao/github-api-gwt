@@ -1,6 +1,8 @@
 package com.github.nyao.gwtgithub.client;
 
+import com.github.nyao.gwtgithub.client.models.AJSON;
 import com.github.nyao.gwtgithub.client.models.Repo;
+import com.github.nyao.gwtgithub.client.models.gitdata.Blob;
 import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
 import com.github.nyao.gwtgithub.client.models.gitdata.Commit;
 import com.github.nyao.gwtgithub.client.models.gitdata.Reference;
@@ -18,6 +20,50 @@ public class GitHubSimpleApi {
     public GitHubSimpleApi(GitHubApi api, Repo repo) {
         this.api = api;
         this.repo = repo;
+    }
+    
+    public void getBlob(Reference ref, final String filename, final AsyncCallback<AJSON<Blob>> callback) {
+        api.getCommit(ref, new AsyncCallback<AJSON<Commit>>() {
+            @Override
+            public void onSuccess(AJSON<Commit> result) {
+                Commit commit = result.getData();
+                api.getTree(repo, commit.getSha(), new AsyncCallback<AJSON<Tree>>() {
+                    @Override
+                    public void onSuccess(AJSON<Tree> result) {
+                        Tree tree = result.getData();
+                        findTree(tree, filename);
+                        api.getBlob(repo, tree.getTree().get(0).getSha(), new AsyncCallback<AJSON<Blob>>() {
+                            @Override
+                            public void onSuccess(AJSON<Blob> result) {
+                                callback.onSuccess(result);
+                            }
+                            @Override
+                            public void onFailure(Throwable caught) {
+                                callback.onFailure(caught);
+                            }
+                        });
+                    }
+                    
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        callback.onFailure(caught);
+                    }
+                });
+            }
+            
+            @Override
+            public void onFailure(Throwable caught) {
+                callback.onFailure(caught);
+            }
+        });
+    }
+    
+    private Tree findTree(Tree tree, String filename) {
+        for (int i = 0; i < tree.getTree().length();i ++) {
+            Tree target = tree.getTree().get(i);
+            if (target.getPath().equals(filename)) return target;
+        }
+        return null;
     }
 
     public void createSimpleCommitAndPush(final Reference ref, 
@@ -46,8 +92,8 @@ public class GitHubSimpleApi {
                                    final String message,
                                    final AsyncCallback<Commit> callback) {
         BlobValue blob = new BlobValue();
-        blob.setContent(content);
         blob.setEncoding("utf-8");
+        blob.setContent(content);
         api.createBlob(repo, blob, new AsyncCallback<BlobCreated>() {
             @Override
             public void onSuccess(BlobCreated blob) {
@@ -58,7 +104,7 @@ public class GitHubSimpleApi {
                 tree[0].setSha(blob.getSha());
                 tree[0].setPath(filename);
                 tree[0].setType("blob");
-                tree[0].setMode("100666");
+                tree[0].setMode("100755");
                 
                 api.createTree(repo, rootTree, new AsyncCallback<Tree>() {
                     @Override
