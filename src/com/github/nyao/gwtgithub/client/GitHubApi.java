@@ -202,14 +202,32 @@ public class GitHubApi {
         post(r.getUrl() + "/git/commits", commit, callback);
     }
 
+    public void createSimpleCommitAndPush(Repo r, Reference ref, String filename, String content, String message, 
+                                   AsyncCallback<Reference> callback) {
+        new GitHubSimpleApi(this, r).createSimpleCommitAndPush(ref, filename, content, message, callback);
+    }
+    
+    public void createSimpleCommit(Repo r, String ref, String filename, String content, String message, 
+                                   AsyncCallback<Commit> callback) {
+        new GitHubSimpleApi(this, r).createSimpleCommit(null, filename, content, message, callback);
+    }
+
     // References
+    
+    public void getReference(Repo r, String ref, AsyncCallback<JSONs<Reference>> callback) {
+        get(r.getUrl() + "/git/" + URL.encode(ref), callback);
+    }
+
+    public void getReferenceHead(Repo r, String ref, AsyncCallback<AJSON<Reference>> callback) {
+        get(r.getUrl() + "/git/refs/heads/" + URL.encode(ref), callback);
+    }
 
     public void createReference(Repo r, ReferenceCreateValue ref, AsyncCallback<Reference> callback) {
         post(r.getUrl() + "/git/refs", ref, callback);
     }
     
-    public void updateReference(Repo r, String refName, ReferenceUpdateValue ref, AsyncCallback<Reference> callback) {
-        post(r.getUrl() + "/git/" + URL.encode(refName), ref, callback);
+    public void updateReference(Repo r, Reference ref, ReferenceUpdateValue refValue, AsyncCallback<Reference> callback) {
+        post(r.getUrl() + "/git/" + ref.getRef(), refValue, callback);
     }
     
     // private methods
