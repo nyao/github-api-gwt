@@ -9,7 +9,7 @@ import com.github.nyao.gwtgithub.client.models.gitdata.Tree;
 import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.CommitValue;
 //import com.github.nyao.gwtgithub.client.values.gitdata.CommiterValue;
-import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceCreateValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.TreeValue;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -55,7 +55,7 @@ public class Note implements EntryPoint {
             tree[0].setSha(blob.getSha());
             tree[0].setPath("order");
             tree[0].setType("blob");
-            tree[0].setMode("100644");
+            tree[0].setMode("100666");
             
             api.createTree(r, rootTree, new CreateCommit());
         }
