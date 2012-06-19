@@ -1,6 +1,6 @@
 package com.github.nyao.gwtgithub.client;
 
-import com.github.nyao.gwtgithub.client.api.AJSON;
+import com.github.nyao.gwtgithub.client.models.AJSON;
 import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
 import com.github.nyao.gwtgithub.client.models.gitdata.Commit;

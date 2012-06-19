@@ -2,7 +2,7 @@ package com.github.nyao.gwtgithub.client;
 
 import static com.google.gwt.query.client.GQuery.$;
 
-import com.github.nyao.gwtgithub.client.api.JSONs;
+import com.github.nyao.gwtgithub.client.models.JSONs;
 import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.models.issues.Issue;
 import com.google.gwt.core.client.EntryPoint;
