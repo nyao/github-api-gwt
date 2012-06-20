@@ -4,6 +4,7 @@ import com.github.nyao.gwtgithub.client.models.AJSON;
 import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.models.gitdata.Blob;
 import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
+import com.github.nyao.gwtgithub.client.util.Base64;
 import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -22,7 +23,7 @@ public class BlobCreateAndGet implements EntryPoint {
             public void onSuccess(AJSON<Repo> result) {
                 repo = result.getData();
                 BlobValue value = new BlobValue();
-                value.setContent("hoge hoge fuga fuga.");
+                value.setContent("Content of the blob");
                 value.setEncoding("utf-8");
                 api.createBlob(repo, value, new AsyncCallback<BlobCreated>() {
                     @Override
@@ -34,6 +35,7 @@ public class BlobCreateAndGet implements EntryPoint {
                                 System.out.println("--");
                                 System.out.println(blob.getEncoding());
                                 System.out.println(blob.getContent());
+                                System.out.println(Base64.decode(blob.getContent()));
                             }
                             
                             @Override
