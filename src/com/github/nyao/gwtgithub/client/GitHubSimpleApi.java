@@ -9,6 +9,7 @@ import com.github.nyao.gwtgithub.client.models.gitdata.Reference;
 import com.github.nyao.gwtgithub.client.models.gitdata.Tree;
 import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.CommitValue;
+import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceCreateValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceUpdateValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.TreeValue;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -66,7 +67,8 @@ public class GitHubSimpleApi {
         return null;
     }
 
-    public void createSimpleCommitAndPush(final Reference ref, 
+    public void createSimpleCommitAndPush(final Reference ref,  // for update
+                                          final String refName, // for create
                                           final String filename, 
                                           final String content, 
                                           final String message,
@@ -74,9 +76,17 @@ public class GitHubSimpleApi {
         createSimpleCommit(ref, filename, content, message, new AsyncCallback<Commit>() {
             @Override
             public void onSuccess(Commit commit) {
-                ReferenceUpdateValue ruv = new ReferenceUpdateValue();
-                ruv.setSha(commit.getSha());
-                api.updateReference(repo, ref, ruv, callback);
+                if (ref == null || ref.getRef() == null) {
+                    ReferenceCreateValue rcv = new ReferenceCreateValue();
+                    rcv.setHeadRef(refName);
+                    rcv.setSha(commit.getSha());
+                    api.createReference(repo, rcv, callback);
+                } else {
+                    ReferenceUpdateValue ruv = new ReferenceUpdateValue();
+                    ruv.setSha(commit.getSha());
+                    api.updateReference(repo, ref, ruv, callback);
+                    
+                }
             }
             
             @Override
@@ -112,7 +122,7 @@ public class GitHubSimpleApi {
                         CommitValue commit = new CommitValue();
                         commit.setMessage(message);
                         commit.setTree(tree.getSha());
-                        if (ref != null) {
+                        if (ref != null && ref.getObject() != null) {
                             commit.setParent(ref.getObject().getSha());
                         }
                         

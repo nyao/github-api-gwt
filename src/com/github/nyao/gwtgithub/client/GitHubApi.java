@@ -223,9 +223,9 @@ public class GitHubApi {
         post(r.getUrl() + "/git/commits", commit, callback);
     }
 
-    public void createSimpleCommitAndPush(Repo r, Reference ref, String filename, String content, String message, 
+    public void createSimpleCommitAndPush(Repo r, Reference ref, String refName, String filename, String content, String message, 
                                    AsyncCallback<Reference> callback) {
-        new GitHubSimpleApi(this, r).createSimpleCommitAndPush(ref, filename, content, message, callback);
+        new GitHubSimpleApi(this, r).createSimpleCommitAndPush(ref, refName, filename, content, message, callback);
     }
     
     public void createSimpleCommit(Repo r, String ref, String filename, String content, String message, 

@@ -26,6 +26,10 @@ public class ReferenceCreateValue extends GHValue<ReferenceCreateValue.Prop> {
         prop.put(Prop.Ref, ref);
     }
 
+    public void setHeadRef(String ref) {
+        prop.put(Prop.Ref, "refs/heads/" + ref);
+    }
+
     public void setSha(String sha) {
         prop.put(Prop.Sha, sha);
     }
