@@ -83,6 +83,12 @@ public class GitHubApi {
         post(r.getUrl(), prop, callback);
     }
     
+    // Contents
+    
+    public void getContent(Repo repo, String path, String ref, AsyncCallback<AJSON<Content>> callback) {
+        get(repo.getUrl() + "/contents/" + path + "?ref=" + ref, callback);
+    }
+    
     // Orgs
 
     public void getOrgs(String user, AsyncCallback<JSONs<GHUser>> callback) {
