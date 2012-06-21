@@ -1,7 +1,8 @@
-package com.github.nyao.gwtgithub.client.models;
+package com.github.nyao.gwtgithub.client.models.repos;
 
 import java.util.Date;
 
+import com.github.nyao.gwtgithub.client.models.users.GHUser;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;

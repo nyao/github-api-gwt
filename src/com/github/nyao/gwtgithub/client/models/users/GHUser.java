@@ -1,4 +1,4 @@
-package com.github.nyao.gwtgithub.client.models;
+package com.github.nyao.gwtgithub.client.models.users;
 
 import com.google.gwt.core.client.JavaScriptObject;
 

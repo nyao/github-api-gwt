@@ -1,9 +1,9 @@
 package com.github.nyao.gwtgithub.client;
 
 import com.github.nyao.gwtgithub.client.models.AJSON;
-import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.models.gitdata.Blob;
 import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
+import com.github.nyao.gwtgithub.client.models.repos.Repo;
 import com.github.nyao.gwtgithub.client.util.Base64;
 import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;
 import com.google.gwt.core.client.EntryPoint;

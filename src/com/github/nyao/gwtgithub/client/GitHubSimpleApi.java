@@ -1,12 +1,12 @@
 package com.github.nyao.gwtgithub.client;
 
 import com.github.nyao.gwtgithub.client.models.AJSON;
-import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.models.gitdata.Blob;
 import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
 import com.github.nyao.gwtgithub.client.models.gitdata.Commit;
 import com.github.nyao.gwtgithub.client.models.gitdata.Reference;
 import com.github.nyao.gwtgithub.client.models.gitdata.Tree;
+import com.github.nyao.gwtgithub.client.models.repos.Repo;
 import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.CommitValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.ReferenceCreateValue;

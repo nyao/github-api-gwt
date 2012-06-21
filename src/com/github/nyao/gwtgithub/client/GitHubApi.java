@@ -1,9 +1,9 @@
 package com.github.nyao.gwtgithub.client;
 
 import com.github.nyao.gwtgithub.client.models.AJSON;
-import com.github.nyao.gwtgithub.client.models.GHUser;
 import com.github.nyao.gwtgithub.client.models.JSONs;
-import com.github.nyao.gwtgithub.client.models.Repo;
+import com.github.nyao.gwtgithub.client.models.repos.Content;
+import com.github.nyao.gwtgithub.client.models.repos.Repo;
 import com.github.nyao.gwtgithub.client.models.gitdata.Blob;
 import com.github.nyao.gwtgithub.client.models.gitdata.BlobCreated;
 import com.github.nyao.gwtgithub.client.models.gitdata.Commit;
@@ -13,6 +13,7 @@ import com.github.nyao.gwtgithub.client.models.issues.Issue;
 import com.github.nyao.gwtgithub.client.models.issues.IssueComment;
 import com.github.nyao.gwtgithub.client.models.issues.Label;
 import com.github.nyao.gwtgithub.client.models.issues.Milestone;
+import com.github.nyao.gwtgithub.client.models.users.GHUser;
 import com.github.nyao.gwtgithub.client.values.GHValue;
 import com.github.nyao.gwtgithub.client.values.RepoValue;
 import com.github.nyao.gwtgithub.client.values.gitdata.BlobValue;

@@ -2,8 +2,8 @@ package com.github.nyao.gwtgithub.client.models.issues;
 
 import java.util.Date;
 
-import com.github.nyao.gwtgithub.client.models.GHUser;
-import com.github.nyao.gwtgithub.client.models.PullRequest;
+import com.github.nyao.gwtgithub.client.models.pullrequests.PullRequest;
+import com.github.nyao.gwtgithub.client.models.users.GHUser;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 

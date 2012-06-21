@@ -3,9 +3,9 @@ package com.github.nyao.gwtgithub.client;
 import java.util.Date;
 
 import com.github.nyao.gwtgithub.client.models.AJSON;
-import com.github.nyao.gwtgithub.client.models.Repo;
 import com.github.nyao.gwtgithub.client.models.gitdata.Blob;
 import com.github.nyao.gwtgithub.client.models.gitdata.Reference;
+import com.github.nyao.gwtgithub.client.models.repos.Repo;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
