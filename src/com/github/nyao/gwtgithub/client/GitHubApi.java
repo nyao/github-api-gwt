@@ -294,7 +294,7 @@ public class GitHubApi {
             builder.sendRequest(requestJson, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-                    T result = JsonUtils.safeEval(response.getText());
+                    T result = JsonUtils.<T>safeEval(response.getText());
                     log.append("\n\n--" + response.getStatusText() + ":" + response.getStatusCode() + "\n" + response.getText());
                     hookedCallback.onSuccess(result);
                     GWT.log(log.toString());
